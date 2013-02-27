@@ -1,0 +1,70 @@
+#
+# http://www.ros.org/wiki/amcl
+# The first commented value is the default per the wiki
+# The second commented value is the default per nav/amcl/examples
+# The third commented value is the defaults in amcl_node.cpp
+#
+  
+# Overall filter parameters
+min_particles:        100       # 100, 500
+max_particles:        10000     # 5000
+kld_err:              0.05      # 0.01, 0.05
+kld_z:                0.99      # 0.99
+update_min_d:         0.1       # 0.2
+update_min_a:         0.5235    # 0.5235
+resample_interval:    1         # 2, 1
+transform_tolerance:  0.2       # 0.1, 0.2
+recovery_alpha_slow:  0.001     # 0.0, 0.0, 0.001
+recovery_alpha_fast:  0.1       # 0.0, 0.0, 0.1
+initial_pose_x:       0.0       # 0.0
+initial_pose_y:       0.0       # 0.0
+initial_pose_a:       0.0       # 0.0
+initial_cov_xx:       0.25      # 0.25
+initial_cov_yy:       0.25      # 0.25
+initial_cov_aa:       0.06853   # 0.06853 
+gui_publish_rate:     10.0      # -1.0, 10
+save_pose_rate:       0.5       # 0.5
+use_map_topic:        true      # false
+first_map_only:       false     # false
+
+# Laser Model Parameters 
+laser_min_range:            -1.0   # -1.0
+laser_max_range:            -1.0   # -1.0
+laser_max_beams:            180    # 180
+laser_z_hit:                0.5    # 0.95, 0.5
+laser_z_short:              0.05   # 0.1,  0.05
+laser_z_max:                0.05   # 0.05 
+laser_z_rand:               0.5    # 0.05, 0.5
+laser_sigma_hit:            0.2    # 0.2   
+laser_lambda_short:         0.1    # 0.1
+laser_likelihood_max_dist:  2.0    # 2.0
+laser_model_type:           likelihood_field
+
+# Odometery model parameters
+odom_model_type:  diff
+odom_alpha1:      0.5    # 0.2      rotational    drift caused by rotation
+odom_alpha2:      0.25   # 0.2      rotational    drift caused by translation
+odom_alpha3:      0.6    # 0.2, 0.8 translational drift caused by translation
+odom_alpha4:      0.25   # 0.2      translational drift caused by rotation
+odom_alpha5:      0.2    # 0.2, 0.1 Holonomic drive systems only
+odom_frame_id:    odom 
+base_frame_id:    base_link 
+global_frame_id:  map 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

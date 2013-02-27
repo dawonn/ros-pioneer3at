@@ -1,0 +1,15 @@
+<launch>
+	<master auto="start"/>
+	
+  <!-- Run AMCL -->
+  
+  <!-- You will need to specify the path for the map file in amcl.launch -->
+	<include file="$(find p2os_launch)/launch/amcl.launch" />
+
+	<!-- Run navigation -->
+	<include file="$(find p2os_launch)/launch/navigation.launch" />
+
+	<!-- Run Hardware Drivers -->
+	<include file="$(find p2os_launch)/launch/tf_lrf_p2os_teleop.launch" /> 
+
+</launch>

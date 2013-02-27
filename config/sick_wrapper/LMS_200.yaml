@@ -1,0 +1,9 @@
+
+# http://ros.org/wiki/sicktoolbox_wrapper
+
+port:       /dev/ttyUSB1
+baud:       38400
+inverted:   false
+frame_id:   laser
+angle:      180
+resolution: 1

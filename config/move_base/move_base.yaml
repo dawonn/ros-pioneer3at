@@ -1,0 +1,93 @@
+
+base_global_planner: navfn/NavfnROS
+base_local_planner: base_local_planner/TrajectoryPlannerROS
+recovery_behaviors: [{
+    name: conservative_reset, 
+    type: clear_costmap_recovery/ClearCostmapRecovery
+  }, {
+    name: rotate_recovery1,
+    type: rotate_recovery/RotateRecovery
+  }, {
+    name: aggressive_reset,
+    type: clear_costmap_recovery/ClearCostmapRecovery
+  }, {
+    name: rotate_recovery2,
+    type: rotate_recovery/RotateRecovery
+  }]
+planner_frequency:          1
+controller_frequency:       20
+planner_patience:           15.0
+controller_patience:        10.0
+conservative_reset_dist:    3.0
+recovery_behavior_enabled:  true
+clearing_rotation_allowed:  true
+shutdown_costmaps:          false
+oscillation_timeout:        0.0
+oscillation_distance:       0.5
+
+
+
+
+# http://www.ros.org/wiki/navfn
+NavfnROS:
+  allow_unknown:                      true
+  planner_window_x:                   0.0
+  planner_window_y:                   0.0
+  default_tolerance:                  0.05
+  visualize_potential:                true   # false
+  planner_costmap_publish_frequency:  0.2
+  
+  
+
+# http://www.ros.org/wiki/base_local_planner
+TrajectoryPlannerROS:
+
+# Robot Configuration Parameters
+  acc_lim_x:                    0.4
+  acc_lim_y:                    0.0
+  acc_lim_th:                   1.5
+  max_vel_x:                    1.5
+  min_vel_x:                    0.15
+  max_rotational_vel:           0.7
+  min_in_place_rotational_vel:  0.2
+  escape_vel:                   -0.3
+  holonomic_robot:              false
+  
+# The following parameters are only used if holonomic_robot is set to true:
+  y_vels: [-0.3, -0.1, 0.1, 0.3]
+  
+# Goal Tolerance Parameters
+  yaw_goal_tolerance:         0.30
+  xy_goal_tolerance:          0.30
+  latch_xy_goal_tolerance:    true
+  
+# Forward Simulation Parameters
+  sim_time:                   1.0
+  sim_granularity:            0.025
+  angular_sim_granularity:    0.025
+  vx_samples:                 3
+  vtheta_samples:             20
+  controller_frequency:       20
+  
+# Trajectory Scoring Parameters
+  meter_scoring:              true
+  path_distance_bias:         0.3     # 0.6
+  goal_distance_bias:         0.8     # 0.8
+  occdist_scale:              0.01
+  heading_lookahead:          0.325
+  heading_scoring:            true    #false
+  heading_scoring_timestep:   0.8
+  dwa:                        true
+  publish_cost_grid_pc:       true    #false
+  global_frame_id:            odom
+  
+# Oscillation Prevention Parameters
+  oscillation_reset_dist:     0.1
+  
+# Global Plan Parameters
+  prune_plan:                 true
+  
+  
+  
+  
+  

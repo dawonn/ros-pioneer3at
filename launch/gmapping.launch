@@ -1,0 +1,3 @@
+<launch>
+	<node pkg="gmapping" type="slam_gmapping" name="slam_gmapping" args="/pioneer3at/laser_scan" />
+</launch>

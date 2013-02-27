@@ -1,0 +1,9 @@
+<launch>
+	<!-- Uncomment the laser you wish to use -->
+	<!-- <include file="$(find pioneer3at)/hokuyo.launch" /> -->
+	<include file="$(find pioneer3at)/launch/sicklms.launch" /> 
+	
+
+	<include file="$(find pioneer3at)/launch/urdf.launch" />
+	<include file="$(find pioneer3at)/launch/p2os_teleop.launch" />
+</launch>

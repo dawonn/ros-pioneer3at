@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<package>
+  <name>pioneer3at</name>
+  <version>0.1.0</version>
+  <description>Pioneer 3AT ROS package with urdf and sample launch files.</description>
+  <maintainer email="dereck@gmail.com">Dereck Wonnacott</maintainer>
+  <license>BSD</license>
+
+  <url type="website">http://ros.org/wiki/p2os</url>
+  <url type="repository">https://github.com/dawonn/ros-Pioneer3AT</url>
+  <url type="bugtracker">https://github.com/dawonn/p2os_driver/issues</url>
+
+  <author email="dereck@gmail.com">Dereck Wonnacott</author>
+  <author email="dfseifer@usc.edu">David Feil-Seifer</author>
+
+  <buildtool_depend>catkin</buildtool_depend>
+  
+  <build_depend>roscpp</build_depend>  
+  <build_depend>sensor_msgs</build_depend>
+  <build_depend>nav_msgs</build_depend>
+  <build_depend>tf</build_depend>
+  
+  <run_depend>roscpp</run_depend>
+  <run_depend>sensor_msgs</run_depend>
+  <run_depend>nav_msgs</run_depend>
+  <run_depend>tf</run_depend>
+  
+  <run_depend>p2os_driver</run_depend>
+  <run_depend>p2os_telop</run_depend>
+  <run_depend>laser_drivers</run_depend>
+  <run_depend>tf</run_depend>
+  <run_depend>joy</run_depend>
+  <run_depend>amcl</run_depend>
+  <run_depend>gmapping</run_depend>
+  <run_depend>move_base</run_depend>
+  <run_depend>diagnostics</run_depend>
+
+</package>

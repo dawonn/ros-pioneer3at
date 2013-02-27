@@ -1,0 +1,34 @@
+#
+# P2OS ROS Driver Node
+#
+# p2os_driver/src/p2os_driver/p2os.cc
+#
+
+use_sonar: false
+
+bumpstall: -1
+pulse: 0.5
+rot_kp: -1 
+rot_kv: -1
+rot_ki: -1
+trans_kp: -1
+trans_kv: -1 
+trans_ki: -1 
+
+port: /dev/ttyUSB0
+use_tcp: false
+tcp_remote_host: localhost
+tcp_remote_port: 8101
+radio: 0
+joystick: 0
+direct_wheel_vel_control: 0
+max_xspeed: 1.0
+max_yawspeed: 1.72
+  
+max_xaccel: 0.0
+max_xdecel: 0.0
+max_yaccel: 0.0
+max_ydecel: 0.0
+
+
+

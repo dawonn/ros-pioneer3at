@@ -1,0 +1,13 @@
+<launch>
+	<master auto="start"/>
+	
+	<!-- Run gMapping -->
+	<include file="$(find p2os_launch)/launch/gmapping.launch" />
+
+	<!-- Run navigation -->
+	<include file="$(find p2os_launch)/launch/navigation.launch" />
+
+	<!-- Run Hardware Drivers -->
+	<include file="$(find p2os_launch)/launch/tf_lrf_p2os_teleop.launch" /> 
+
+</launch>
