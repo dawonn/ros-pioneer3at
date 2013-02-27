@@ -1,0 +1,237 @@
+<?xml version="1.0"?>
+
+<!-- Please note that this URDF will _not_ load in gazebo -->
+
+<robot xmlns:sensor="http://playerstage.sourceforge.net/gazebo/xmlschema/#sensor"
+       xmlns:controller="http://playerstage.sourceforge.net/gazebo/xmlschema/#controller"
+       xmlns:interface="http://playerstage.sourceforge.net/gazebo/xmlschema/#interface"
+       xmlns:xacro="http://ros.org/wiki/xacro"
+name="pioneer3at">
+
+<!-- Chassis -->
+	<link name="base_link">
+		<visual>
+			<origin xyz="0 0 0.177" rpy="0 0 0"/>
+			<geometry>
+				<mesh filename="package://pioneer3at/meshes/chassis.stl"/>
+			</geometry>
+			<material name="ChassisRed">
+				<color rgba="0.851 0.0 0.0 1.0"/>
+			</material>
+		</visual>
+	</link>
+
+<!-- Top -->
+	<link name="top_plate">
+		<visual>
+			<origin xyz="0 0 0" rpy="0 0 0"/>
+			<geometry>
+				<mesh filename="package://pioneer3at/meshes/top.stl"/>
+			</geometry>
+			<material name="TopBlack">
+					<color rgba="0.038 0.038 0.038 1.0"/>
+			</material>
+		</visual>
+	</link>
+
+	<joint name="base_top_joint" type="fixed">
+		<origin xyz="0.003 0 0.274" rpy="0 0 0"/>
+		<parent link="base_link"/>
+		<child link="top_plate"/>
+	</joint>
+	
+<!-- Front & Back Sonar -->
+	<link name="front_sonar">
+		<visual>
+			<origin xyz="0 0 0" rpy="0 0 0"/>
+			<geometry>
+				<mesh filename="package://pioneer3at/meshes/front_sonar.stl"/>
+			</geometry>
+			<material name="SonarYellow">
+				<color rgba="0.715 0.583 0.210 1.0"/>
+			</material>
+		</visual>
+	</link>
+
+	<joint name="base_front_joint" type="fixed">
+		<origin xyz="0.193 0 0.25" rpy="0 0 0"/>
+		<parent link="base_link"/>
+		<child link="front_sonar"/>
+	</joint>
+
+	<link name="back_sonar">
+		<visual>
+			<origin xyz="0 0 0" rpy="0 0 0"/>
+			<geometry>
+				<mesh filename="package://pioneer3at/meshes/back_sonar.stl"/>
+			</geometry>
+			<material name="SonarYellow">
+				<color rgba="0.715 0.583 0.210 1.0"/>
+			</material>
+		</visual>
+	</link>
+
+	<joint name="base_back_joint" type="fixed">
+		<origin xyz="-0.187 0 0.247" rpy="0 0 0"/>
+		<parent link="base_link"/>
+		<child link="back_sonar"/>
+	</joint>
+
+<!-- Front Axles + Wheels + Hubcaps -->
+  <xacro:macro name="p3at_front" params="suffix reflect">
+	  <link name="p3at_front_${suffix}_axle">
+      <visual>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+	        <mesh filename="package://pioneer3at/meshes/axle.stl"/>
+        </geometry>
+        <material name="AxleGrey">
+	        <color rgba="0.5 0.5 0.5 1"/>
+        </material>
+      </visual>
+	  </link>
+
+	  <joint name="base_front_${suffix}_axle_joint" type="fixed">
+		  <origin xyz="0.135 ${reflect*0.156} 0.111" rpy="0 0 0"/>
+		  <parent link="base_link"/>
+		  <child link="p3at_front_${suffix}_axle"/>
+	  </joint>
+
+    <link name="p3at_front_${suffix}_hub">
+      <visual>
+		    <origin xyz="0 0 0" rpy="0 0 0"/>
+		    <geometry>
+			    <mesh filename="package://pioneer3at/meshes/${suffix}_hubcap.stl"/>
+		    </geometry>
+		    <material name="HubcapYellow">
+			    <color rgba="1.0 0.811 0.151 1.0"/>
+		    </material>
+	    </visual>
+	  </link>
+
+	  <joint name="base_front_${suffix}_hub_joint" type="continuous">
+		  <origin xyz="0 ${reflect*0.041} 0" rpy="0 0 0"/>
+		  <parent link="p3at_front_${suffix}_axle"/>
+		  <child link="p3at_front_${suffix}_hub"/>
+		  <axis xyz="0 1 0" />
+	  </joint>
+
+	  <link name="p3at_front_${suffix}_wheel">
+      <visual>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+	        <mesh filename="package://pioneer3at/meshes/wheel.stl"/>
+        </geometry>
+        <material name="WheelBlack">
+	        <color rgba="0.117 0.117 0.117 1"/>
+        </material>
+      </visual>
+	  </link>
+
+	  <joint name="base_front_${suffix}_wheel_joint" type="fixed">
+		  <origin xyz="0 0 0" rpy="0 0 0"/>
+		  <parent link="p3at_front_${suffix}_hub"/>
+		  <child link="p3at_front_${suffix}_wheel"/>
+	  </joint>
+  </xacro:macro>
+
+<!-- Back Axles + Wheels + Hubcaps -->
+  <xacro:macro name="p3at_back" params="suffix reflect">
+	  <link name="p3at_back_${suffix}_axle">
+      <visual>
+	      <origin xyz="0 0 0" rpy="0 0 0"/>
+	      <geometry>
+		      <mesh filename="package://pioneer3at/meshes/axle.stl"/>
+	      </geometry>
+	      <material name="AxleGrey">
+		      <color rgba="0.5 0.5 0.5 1"/>
+	      </material>
+      </visual>
+	  </link>
+
+	  <joint name="p3at_back_${suffix}_axle_joint" type="fixed">
+		  <origin xyz="-0.134 ${reflect*0.156} 0.111" rpy="0 0 0"/>
+		  <parent link="base_link"/>
+		  <child link="p3at_back_${suffix}_axle"/>
+	  </joint>
+
+	  <link name="p3at_back_${suffix}_hub">
+	    <visual>
+		    <origin xyz="0 0 0" rpy="0 0 0"/>
+		    <geometry>
+			    <mesh filename="package://pioneer3at/meshes/${suffix}_hubcap.stl"/>
+		    </geometry>
+		    <material name="HubcapYellow"/>
+	    </visual>
+	  </link>
+
+	  <joint name="p3at_back_${suffix}_hub_joint" type="continuous">
+		  <origin xyz="-0 ${reflect*0.041} 0" rpy="0 0 0"/>
+		  <parent link="p3at_back_${suffix}_axle"/>
+		  <child link="p3at_back_${suffix}_hub"/>
+		  <axis xyz="0 1 0" />
+	  </joint>
+
+	  <link name="p3at_back_${suffix}_wheel">
+	    <visual>
+		    <origin xyz="0 0 0" rpy="0 0 0"/>
+		    <geometry>
+			    <mesh filename="package://pioneer3at/meshes/wheel.stl"/>
+		    </geometry>
+		    <material name="WheelBlack"/>
+	    </visual>
+	  </link>
+
+	  <joint name="p3at_back_${suffix}_wheel_joint" type="fixed">
+		  <origin xyz="0 0 0" rpy="0 0 0"/>
+		  <parent link="p3at_back_${suffix}_hub"/>
+		  <child link="p3at_back_${suffix}_wheel"/>
+	  </joint>
+  </xacro:macro>
+
+  <xacro:macro name="Sonar" params="id px py rz">
+	  <link name="Sonar_${id}">
+      <visual>
+	      <origin xyz="0 0 0" rpy="0 1.57 0"/>
+	      <geometry>
+		      <cylinder radius="0.01" length="0.005"/>
+	      </geometry>
+	      <material name="SonarGold">
+		      <color rgba="0.9 0.6 0.2 1"/>
+	      </material>
+      </visual>
+	  </link>
+
+	  <joint name="Sonar_${id}_joint" type="fixed">
+		  <origin xyz="${px} ${py} 0.25" rpy="0 0 ${rz}"/>
+		  <parent link="base_link"/>
+		  <child link="Sonar_${id}"/>
+	  </joint>
+  </xacro:macro>
+
+  <xacro:p3at_front suffix="left" reflect="1"/>
+  <xacro:p3at_front suffix="right" reflect="-1"/>
+  <xacro:p3at_back  suffix="left" reflect="1"/>
+  <xacro:p3at_back  suffix="right" reflect="-1"/>
+
+<!-- Sonar data came directly from p2os_driver robot_params.cc -->
+  <xacro:Sonar      id="1"  px="0.145"  py="0.13"   rz="1.5705"/>
+  <xacro:Sonar      id="2"  px="0.185"  py="0.115"  rz="0.8725"/>
+  <xacro:Sonar      id="3"  px="0.22"   py="0.08"   rz="0.5235"/>
+  <xacro:Sonar      id="4"  px="0.24"   py="0.025"  rz="0.1745"/>
+  <xacro:Sonar      id="5"  px="0.24"   py="-0.025" rz="-0.1745"/>
+  <xacro:Sonar      id="6"  px="0.22"   py="-0.08"  rz="-0.5235"/>
+  <xacro:Sonar      id="7"  px="0.185"  py="-0.115" rz="-0.8725"/>
+  <xacro:Sonar      id="8"  px="0.145"  py="-0.13"  rz="-1.5705"/>
+  <xacro:Sonar      id="9"  px="-0.145" py="-0.13"  rz="-1.5705"/>
+  <xacro:Sonar      id="10" px="-0.185" py="-0.115" rz="-2.2685"/>
+  <xacro:Sonar      id="11" px="-0.22"  py="-0.08"  rz="-2.6175"/>
+  <xacro:Sonar      id="12" px="-0.24"  py="-0.025" rz="-2.9665"/>
+  <xacro:Sonar      id="13" px="-0.24"  py="0.025"  rz="2.9665"/>
+  <xacro:Sonar      id="14" px="-0.22"  py="0.08"   rz="2.6175"/>
+  <xacro:Sonar      id="15" px="-0.185" py="0.115"  rz="2.2685"/>
+  <xacro:Sonar      id="16" px="-0.145" py="0.13"   rz="1.5705"/>
+
+</robot>
+
+
