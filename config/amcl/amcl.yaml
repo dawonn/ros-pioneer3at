@@ -4,6 +4,7 @@
 # The second commented value is the default per nav/amcl/examples
 # The third commented value is the defaults in amcl_node.cpp
 #
+# The map file is specified in launch/amcl.launch
   
 # Overall filter parameters
 min_particles:        100       # 100, 500

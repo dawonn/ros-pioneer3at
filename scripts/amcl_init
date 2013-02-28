@@ -1,0 +1,19 @@
+#!/usr/bin/env python
+# This is a hack for Groovy until they fix rosservice:
+# https://github.com/ros/ros_comm/issues/180
+#
+# When fixed, remove this script and fix amcl.launch 
+
+import time
+
+import rospy
+import std_srvs.srv
+
+try:
+  rospy.wait_for_service('/global_localization')
+  time.sleep(5.0)
+  global_localization = rospy.ServiceProxy('/global_localization', std_srvs.srv.Empty)
+  resp1 = global_localization()
+except rospy.ServiceException, e:
+  rospy.logerr("Service could not process request: %s"%str(e))
+

@@ -29,21 +29,21 @@ target_link_libraries(p2os_urdf_publisher ${catkin_LIBRARIES} )
 #############
 ## Install ##
 #############
+install(PROGRAMS scripts/init_amcl
+  DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})
 
 ## Mark executables and/or libraries for installation
- install(TARGETS p2os_urdf_publisher
-   RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
- )
-
-
+install(TARGETS p2os_urdf_publisher
+  RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
+)
 
 ## Mark other files for installation (e.g. launch and bag files, etc.)
- install(DIRECTORY 
-   urdf 
-   launch
-   meshes 
-   models
-   config 
-   DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
- )
+install(DIRECTORY 
+  urdf 
+  launch
+  meshes 
+  models
+  config 
+  DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
+)
 
