@@ -1,14 +1,18 @@
 #
 # http://www.ros.org/wiki/gmapping
 #
+# First commented value is the default per the wiki
+# second commented value is the default per the sample launch file (pr2)
+
   
 throttle_scans:       1
 base_frame:           base_link
 map_frame:            map
 odom_frame:           odom
-map_update_interval:  0.5       # 5.0
+map_update_interval:  5.0 
 
-maxUrange:            80.0
+# Unset maxUrange and maxRange and it will autodetect
+# maxUrange:          80.0 # 80.0 16.0
 sigma:                0.05
 kernelSize:           1 
 lstep:                0.05
@@ -17,26 +21,34 @@ iterations:           5
 lsigma:               0.075
 ogain:                3.0
 lskip:                0
+
 srr:                  0.1
 srt:                  0.2
 str:                  0.1
 stt:                  0.2
+
 linearUpdate:         1.0      
-angularUpdate:        0.5     
-temporalUpdate:       -1.0      
+angularUpdate:        0.5 
+temporalUpdate:       3.0   # -1.0 3.0   
+
 resampleThreshold:    0.5     
 particles:            30
-xmin:                 -100
-ymin:                 -100
-xmax:                 100    
-ymax:                 100
+
+# Initial Map Size & Resolution
+xmin:                 -5   # -100 -50
+ymin:                 -5   # -100 -50
+xmax:                  5   # 100   50   
+ymax:                  5   # 100   50
 delta:                0.05
-llsamplerange:        0.01            
+
+llsamplerange:        0.01           
 llsamplestep:         0.01
+lasamplerange:        0.005  
 lasamplestep:         0.005
+
 transform_publish_period:  0.05       
 occ_thresh:           0.25
-maxRange:             10.0
+# maxRange:             80.0
 
 
 

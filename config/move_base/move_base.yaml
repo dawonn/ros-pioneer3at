@@ -14,6 +14,7 @@ recovery_behaviors: [{
     name: rotate_recovery2,
     type: rotate_recovery/RotateRecovery
   }]
+  
 planner_frequency:          1
 controller_frequency:       20
 planner_patience:           15.0
@@ -72,13 +73,13 @@ TrajectoryPlannerROS:
 # Trajectory Scoring Parameters
   meter_scoring:              true
   path_distance_bias:         0.3     # 0.6
-  goal_distance_bias:         0.8     # 0.8
+  goal_distance_bias:         0.8
   occdist_scale:              0.01
   heading_lookahead:          0.325
   heading_scoring:            true    #false
   heading_scoring_timestep:   0.8
   dwa:                        true
-  publish_cost_grid_pc:       true    #false
+  publish_cost_grid_pc:       false
   global_frame_id:            odom
   
 # Oscillation Prevention Parameters

@@ -27,8 +27,8 @@ inflation_radius:           0.35      # 0.55
 robot_radius:               0.30
 
 ### Sensor management parameters ###
-observation_sources: SICK_LMS
-SICK_LMS: { 
+observation_sources: laser_scanner
+laser_scanner: { 
   topic:                    /pioneer3at/laser_scan, 
   sensor_frame:             /pioneer3at/laser_scan, 
   observation_persistence:  0.0,

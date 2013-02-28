@@ -253,6 +253,16 @@ Visualization Manager:
         Min Color: 0; 0; 0
         Value: true
       Value: true
+    - Angle Tolerance: 0.05
+      Class: rviz/Odometry
+      Color: 0; 0; 255
+      Enabled: true
+      Keep: 0
+      Length: 0.2
+      Name: Odometry
+      Position Tolerance: 0.18
+      Topic: /pose
+      Value: true
     - Arrow Length: 0.3
       Class: rviz/PoseArray
       Color: 170; 255; 255
@@ -266,16 +276,6 @@ Visualization Manager:
       Enabled: true
       Name: Polygon
       Topic: /move_base/global_costmap/robot_footprint
-      Value: true
-    - Angle Tolerance: 0.1
-      Class: rviz/Odometry
-      Color: 0; 0; 255
-      Enabled: true
-      Keep: 0
-      Length: 0.3
-      Name: Odometry
-      Position Tolerance: 0.3
-      Topic: /pose
       Value: true
     - Alpha: 1
       Buffer Length: 1
@@ -306,11 +306,11 @@ Visualization Manager:
       Class: rviz/TopDownOrtho
       Name: Current View
       Near Clip Distance: 0.01
-      Scale: 47.3453
+      Scale: 33.0857
       Target Frame: <Fixed Frame>
       Value: TopDownOrtho (rviz)
-      X: 6.45188
-      Y: 7.89202
+      X: -0.31315
+      Y: 0.888786
     Saved: ~
 Window Geometry:
   Displays:
@@ -329,4 +329,4 @@ Window Geometry:
     collapsed: false
   Width: 1223
   X: -9
-  Y: 65
+  Y: 42
