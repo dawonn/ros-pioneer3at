@@ -10,7 +10,7 @@
   </node>
   
   
-	<node pkg="pioneer3at" type="p2os_urdf" name="p2os_urdf">
+	<node pkg="pioneer3at" type="p2os_urdf_publisher" name="p2os_urdf">
     <param name="publish_odom_test"  type="bool" value="false"/>
     <param name="publish_sonar_test" type="bool" value="false"/>
   </node>

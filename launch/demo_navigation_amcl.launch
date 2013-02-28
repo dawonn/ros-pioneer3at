@@ -1,15 +1,16 @@
 <launch>
-	<master auto="start"/>
 	
-  <!-- Run AMCL -->
-  
+  <!-- Run AMCL -->  
+
   <!-- You will need to specify the path for the map file in amcl.launch -->
-	<include file="$(find p2os_launch)/launch/amcl.launch" />
+	<include file="$(find pioneer3at)/launch/amcl.launch" />
+
 
 	<!-- Run navigation -->
-	<include file="$(find p2os_launch)/launch/navigation.launch" />
+	<include file="$(find pioneer3at)/launch/navigation.launch" />
+
 
 	<!-- Run Hardware Drivers -->
-	<include file="$(find p2os_launch)/launch/tf_lrf_p2os_teleop.launch" /> 
+	<include file="$(find pioneer3at)/launch/lrf_p2os_teleop.launch" /> 
 
 </launch>
