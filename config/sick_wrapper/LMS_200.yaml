@@ -1,9 +1,21 @@
 
 # http://ros.org/wiki/sicktoolbox_wrapper
 
-port:       /dev/ttyUSB1
-baud:       38400
-inverted:   false
-frame_id:   laser
-angle:      180
-resolution: 1
+use_rep_117:  true
+port:         /dev/ttyUSB1
+baud:         38400
+inverted:     false
+frame_id:     /pioneer3at/laser_scan
+angle:        180
+resolution:   1
+
+
+# Diagnostics (From sicklms.cpp)
+desired_frequency:    75.0
+min_frequency:        75.0
+max_frequency:        75.0
+frequency_tolerance:  0.3
+window_size:          30
+min_acceptable_delay: 0.0
+max_acceptable_delay: 0.2
+hardware_id:          "SICK LMS"

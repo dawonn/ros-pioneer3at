@@ -3,8 +3,9 @@
 	<!-- Run gMapping -->
 	<include file="$(find pioneer3at)/launch/gmapping.launch" />
 
-	<!-- Run navigation -->
+	<!-- Run navigation 
 	<include file="$(find pioneer3at)/launch/navigation.launch" />
+-->
 
 	<!-- Run Hardware Drivers -->
 	<include file="$(find pioneer3at)/launch/lrf_p2os_teleop.launch" /> 

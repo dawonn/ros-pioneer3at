@@ -1,0 +1,17 @@
+#
+# P2OS Teleop Node
+#
+ 
+joy_msg_timeout: 1
+
+max_vx: 0.6
+max_vy: 0.6
+max_vx: 0.8
+
+max_vx_run: 1.2
+max_vy_run: 1.2
+max_vx_run: 1.2
+
+
+
+
