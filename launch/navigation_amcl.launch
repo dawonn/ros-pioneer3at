@@ -1,12 +1,12 @@
 <launch>
   
   <!-- Configure this launch file for your hardware setup  -->
-	<include file="$(find pioneer3at)/config/roslaunch/hardware.launch" />
+	<include file="$(find pioneer3at)/launch/hardware.launch" />
 	
 	
 	<!-- Launch Applications  -->
-	<include file="$(find pioneer3at)/config/roslaunch/apps/gmapping.launch" />
-	<include file="$(find pioneer3at)/config/roslaunch/apps/navigation.launch" />
+	<include file="$(find pioneer3at)/launch/apps/amcl.launch" />
+	<include file="$(find pioneer3at)/launch/apps/navigation.launch" />
 	
 </launch>
 

@@ -1,6 +1,0 @@
-<launch>
-	<node pkg="ps3joy" type="ps3joy.py" name="ps3joy">
-	  
-	</node>
-	<node pkg="joy" type="joy_node" name="joy_node" />
-</launch>

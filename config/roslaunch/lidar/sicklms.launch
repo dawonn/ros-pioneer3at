@@ -1,9 +1,0 @@
-<launch>
-	<node pkg="sicktoolbox_wrapper" type="sicklms" name="sicklms" >
-		<rosparam file="$(find pioneer3at)/config/sick_wrapper/LMS_200.yaml" command="load" />
-		<remap from="/scan" to="/pioneer3at/laser_scan" />
-	</node>
-	
-		<!-- publish static transform from the center of the robot to the laser rangefinder (required for slam_gmapping) -->
-	<node pkg="tf" type="static_transform_publisher" name="base_link_to_laser" args="0.17 0 0.4 0 0 0 base_link /pioneer3at/laser_scan 100" />
-</launch>

@@ -1,0 +1,9 @@
+<launch>
+	<node pkg="ps3joy" type="ps3joy.py" name="ps3joy" launch-prefix="xterm -e"/>
+	<node pkg="joy" type="joy_node" name="joy_node" />
+	
+	<node pkg="pioneer3at" type="teleop_joy" name="teleop_joy_ps3" >
+	
+	</node>
+	
+</launch>

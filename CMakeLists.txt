@@ -29,7 +29,8 @@ target_link_libraries(p2os_urdf_publisher ${catkin_LIBRARIES} )
 #############
 ## Install ##
 #############
-install(PROGRAMS scripts/init_amcl
+install(PROGRAMS  scripts/init_amcl
+                  scripts/teleop_joy
   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})
 
 ## Mark executables and/or libraries for installation
