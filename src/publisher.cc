@@ -110,16 +110,6 @@ int main( int argc, char* argv[] )
 		// Wheel joints
     sensor_msgs::JointState js;
 	  wheel_rot += (vx / (2 * 3.14 * 0.18)) * dt;
-	  
-    // P3-DX
-	  js.name.push_back(std::string("base_swivel_joint"));
-	  js.position.push_back(0);
-	  js.name.push_back(std::string("swivel_hubcap_joint"));
-	  js.position.push_back(wheel_rot);
-	  js.name.push_back(std::string("base_left_hubcap_joint"));
-	  js.position.push_back(wheel_rot);
-	  js.name.push_back(std::string("base_right_hubcap_joint"));
-	  js.position.push_back(wheel_rot);
 	
 	  // P3-AT
 	  js.name.push_back(std::string("base_front_left_hub_joint"));

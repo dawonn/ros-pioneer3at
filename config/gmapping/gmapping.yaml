@@ -1,8 +1,6 @@
 #
 # http://www.ros.org/wiki/gmapping
 #
-# First commented value is the default per the wiki
-# second commented value is the default per the sample launch file (pr2)
 
   
 throttle_scans:       1
@@ -12,7 +10,7 @@ odom_frame:           odom
 map_update_interval:  5.0 
 
 # Unset maxUrange and maxRange and it will autodetect
-# maxUrange:          80.0 # 80.0 16.0
+# maxUrange:          10.0
 sigma:                0.05
 kernelSize:           1 
 lstep:                0.05
@@ -29,16 +27,16 @@ stt:                  0.2
 
 linearUpdate:         1.0      
 angularUpdate:        0.5 
-temporalUpdate:       3.0   # -1.0 3.0   
+temporalUpdate:       5.0    
 
 resampleThreshold:    0.5     
 particles:            30
 
 # Initial Map Size & Resolution
-xmin:                 -5   # -100 -50
-ymin:                 -5   # -100 -50
-xmax:                  5   # 100   50   
-ymax:                  5   # 100   50
+xmin:                 -2
+ymin:                 -2
+xmax:                  2
+ymax:                  2
 delta:                0.05
 
 llsamplerange:        0.01           
@@ -48,7 +46,7 @@ lasamplestep:         0.005
 
 transform_publish_period:  0.05       
 occ_thresh:           0.25
-# maxRange:             80.0
+# maxRange:           10.0
 
 
 
