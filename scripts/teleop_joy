@@ -20,7 +20,7 @@ def joyCB(msg):
     rospy.logdebug("Joy Command Recieved: [Vx:%f, Wz:%f]"%(msg.axes[1], msg.axes[2]))
     cmd_vel_msg.linear.x = msg.axes[1]
     cmd_vel_msg.angular.z = msg.axes[2]
-  else
+  else:
     cmd_vel_msg.linear.x = 0
     cmd_vel_msg.angular.z = 0
     
