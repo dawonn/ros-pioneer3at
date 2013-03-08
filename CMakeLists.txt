@@ -26,11 +26,25 @@ catkin_package(
 add_executable(p2os_urdf_publisher src/publisher.cc)
 target_link_libraries(p2os_urdf_publisher ${catkin_LIBRARIES} )
 
+# Gazebo Protobufs
+execute_process(COMMAND protoc -I='${CATKIN_PACKAGE_BIN_DESTINATION}/scripts/proto/msg' --python_out='${CATKIN_PACKAGE_BIN_DESTINATION}/scripts/proto' ${CATKIN_PACKAGE_BIN_DESTINATION}/scripts/proto/msg/*.proto
+                WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
+
 #############
 ## Install ##
 #############
 install(PROGRAMS  scripts/init_amcl
                   scripts/teleop_joy
+                  scripts/gazebo_p3at
+                  scripts/proto/__init__.py
+                  scripts/proto/header.py
+                  scripts/proto/packet.py
+                  scripts/proto/pose.py
+                  scripts/proto/publish.py
+                  scripts/proto/quaternion.py
+                  scripts/proto/subscribe.py
+                  scripts/proto/time.py
+                  scripts/proto/vector3d.py
   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})
 
 ## Mark executables and/or libraries for installation

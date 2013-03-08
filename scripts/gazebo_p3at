@@ -1,0 +1,59 @@
+#!/usr/bin/env python
+            
+import time
+           
+import rospy
+from geometry_msgs.msg  import Twist
+
+import gazebo
+from proto.pose_pb2          import Pose
+
+
+GZ_CMD_VEL_TOPIC  = "~/Pioneer3AT/vel_cmd";
+ROS_CMD_VEL_TOPIC = "/cmd_vel";
+
+GZ_ODOM_TOPIC     = "~/Pioneer3AT/odom";
+ROS_ODOM_TOPIC    = "/odom";
+
+
+    
+# Rebroadcast commands from the autonomous navigation planner
+def ros_cmd_velCB(msg):    
+    print "[ros_cmd_velCB] CMD Rx'd:", msg.linear.x, msg.angular.z
+    cmd_vel               = Pose()
+    cmd_vel.name          = "ROS cmd_vel"
+    cmd_vel.position.x    = msg.linear.x
+    cmd_vel.position.y    = 0
+    cmd_vel.position.z    = msg.angular.z
+    cmd_vel.orientation.x = 0
+    cmd_vel.orientation.y = 0
+    cmd_vel.orientation.z = 0
+    cmd_vel.orientation.w = 0
+
+    gz.Publish(GZ_CMD_VEL_TOPIC, cmd_vel)
+
+
+def gz_odomCB(msg):        
+    x = Pose()
+    x.ParseFromString(msg)
+    print "odomCB>>\n", x
+
+
+if __name__ == '__main__':
+    # Gazebo Initialization
+    gz = gazebo.gzMaster()
+    gz.AdvertisePublisher(GZ_CMD_VEL_TOPIC, Pose.DESCRIPTOR.full_name)
+    #gz.Subscribe(GZ_ODOM_TOPIC, gz_odomCB)
+
+    # ROS Initialization
+    rospy.init_node('pioneer3at_gazebo')
+    rospy.Subscriber(ROS_CMD_VEL_TOPIC, Twist, ros_cmd_velCB)
+    
+    while not rospy.is_shutdown():
+        gz.SpinOnce()
+        time.sleep(0.2)
+    
+            
+            
+
+  
