@@ -88,25 +88,7 @@ int main( int argc, char* argv[] )
 	{
 		current_time = ros::Time::now(); 
 		double dt = (current_time - last_time).toSec();
-		
-		// Sonar Range Test
-		if(publish_sonar)
-		{
-      for(int i=1;i<=16;i++)
-      {
-        sonar.header.stamp = ros::Time::now(); 
-        sonar.range        = 1.3;
-        
-        char buff[64];
-        sprintf(buff, "Sonar_f%d", i);
-        sonar.header.frame_id = buff; 
-	      sonar_pub.publish(sonar);
-	      
-		    ros::spinOnce();
-		    loop_rate.sleep();
-		  }
-		}
-		    
+				    
 		// Wheel joints
     sensor_msgs::JointState js;
 	  wheel_rot += (vx / (2 * 3.14 * 0.18)) * dt;
@@ -134,6 +116,25 @@ int main( int argc, char* argv[] )
     js.header.frame_id="base_link";
     js.header.stamp = ros::Time::now();
 		joint_state_publisher.publish(js);
+		
+		
+		// Sonar Range Test
+		if(publish_sonar)
+		{
+      for(int i=1;i<=16;i++)
+      {
+        sonar.header.stamp = ros::Time::now(); 
+        sonar.range        = 1.3;
+        
+        char buff[64];
+        sprintf(buff, "Sonar_f%d", i);
+        sonar.header.frame_id = buff; 
+	      sonar_pub.publish(sonar);
+	      
+		    ros::spinOnce();
+		    loop_rate.sleep();
+		  }
+		}
 		
 		
     // Odometry given the velocities of the robot

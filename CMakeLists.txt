@@ -3,6 +3,26 @@ project(pioneer3at)
 
 find_package(catkin REQUIRED COMPONENTS roscpp sensor_msgs nav_msgs tf)
 
+#######################
+## Gazebo Standalone ##
+#######################
+
+include (FindPkgConfig)
+if (PKG_CONFIG_FOUND)
+  pkg_check_modules(GAZEBO gazebo)
+endif()
+
+include(FindBoost)
+find_package(Boost ${MIN_BOOST_VERSION} REQUIRED system filesystem regex)
+
+find_package(Protobuf REQUIRED)
+
+include_directories(${GAZEBO_INCLUDE_DIRS})
+link_directories(${GAZEBO_LIBRARY_DIRS})
+
+add_executable(gazebo_bridge src/gazebo_bridge.cc)
+target_link_libraries(gazebo_bridge ${GAZEBO_LIBRARIES} ${Boost_LIBRARIES} ${PROTOBUF_LIBRARIES})
+
 
 ###################################################
 ## Declare things to be passed to other projects ##
@@ -23,8 +43,8 @@ catkin_package(
 ###########
 
 ## Declare a cpp executable
-add_executable(p2os_urdf_publisher src/publisher.cc)
-target_link_libraries(p2os_urdf_publisher ${catkin_LIBRARIES} )
+add_executable(urdf_joint_state_publisher src/urdf_joint_state_publisher.cc)
+target_link_libraries(urdf_joint_state_publisher ${catkin_LIBRARIES} )
 
 # Gazebo Protobufs
 execute_process(COMMAND protoc -I='${CATKIN_PACKAGE_BIN_DESTINATION}/scripts/proto/msg' --python_out='${CATKIN_PACKAGE_BIN_DESTINATION}/scripts/proto' ${CATKIN_PACKAGE_BIN_DESTINATION}/scripts/proto/msg/*.proto
@@ -48,7 +68,7 @@ install(PROGRAMS  scripts/init_amcl
   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})
 
 ## Mark executables and/or libraries for installation
-install(TARGETS p2os_urdf_publisher
+install(TARGETS urdf_joint_state_publisher
   RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )
 
