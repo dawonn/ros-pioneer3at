@@ -16,45 +16,55 @@
  *
 */
 
+#include <ros/ros.h>
+#include <geometry_msgs/Twist.h>
+#include <tf/transform_broadcaster.h>
+#include <nav_msgs/Odometry.h>
+
 #include <gazebo/transport/transport.hh>
 #include <gazebo/msgs/msgs.hh>
 #include <math/gzmath.hh>
 
 #include <iostream>
 
+gazebo::transport::PublisherPtr gz_vel_cmd_pub;
 
 /////////////////////////////////////////////////
-int main()
-{
-  // Initialize transport
-  gazebo::transport::init();
-
-  // Create our node for communication
-  gazebo::transport::NodePtr node(new gazebo::transport::Node());
-  node->Init();
-  
-  // Start transport
-  gazebo::transport::run();
-
-  // Publish to a Gazebo topic
-  gazebo::transport::PublisherPtr pub = node->Advertise<gazebo::msgs::Pose>("~/pose_example");
-  
-  // Wait for a subscriber to connect
-  pub->WaitForConnection();
-  
+void ros_cmd_vel_Callback(const geometry_msgs::Twist::ConstPtr& msg_in)
+{ 
   // Generate a pose
-  gazebo::math::Pose pose(1,2,3,4,5,6);
+  gazebo::math::Pose pose(msg_in->linear.x,
+                          msg_in->linear.y,
+                          msg_in->linear.z,
+                          msg_in->angular.x,
+                          msg_in->angular.y,
+                          msg_in->angular.z);
   
   // Convert to a pose message
-  gazebo::msgs::Pose msg;
-  gazebo::msgs::Set(&msg, pose);
-    
-  // Busy wait loop...replace with your own code as needed.
-  while (true)
-  {
-    gazebo::common::Time::MSleep(100);
-    pub->Publish(msg);
-  }  
+  gazebo::msgs::Pose msg_out;
+  gazebo::msgs::Set(&msg_out, pose);
+  gz_vel_cmd_pub->Publish(msg_out);
+}
+
+/////////////////////////////////////////////////
+int main( int argc, char* argv[] )
+{
+  // Initialize Gazebo
+  gazebo::transport::init();
+  gazebo::transport::NodePtr node(new gazebo::transport::Node());
+  node->Init();
+  gazebo::transport::run();
+  gz_vel_cmd_pub = node->Advertise<gazebo::msgs::Pose>("~/Pioneer3AT/vel_cmd");
+  gz_vel_cmd_pub->WaitForConnection();
+  
+  
+  // Initialize ROS
+  ros::init(argc, argv, "gazebo_bridge");
+  //ros::NodeHandle n;
+  ros::NodeHandle n_("~");
+  ros::Rate loop_rate(10);
+  ros::Subscriber sub = n_.subscribe("/Pioneer3AT/cmd_vel", 10, ros_cmd_vel_Callback);
+  ros::spin();
     
   // Make sure to shut everything down.
   gazebo::transport::fini();

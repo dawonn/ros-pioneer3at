@@ -20,9 +20,6 @@ find_package(Protobuf REQUIRED)
 include_directories(${GAZEBO_INCLUDE_DIRS})
 link_directories(${GAZEBO_LIBRARY_DIRS})
 
-add_executable(gazebo_bridge src/gazebo_bridge.cc)
-target_link_libraries(gazebo_bridge ${GAZEBO_LIBRARIES} ${Boost_LIBRARIES} ${PROTOBUF_LIBRARIES})
-
 
 ###################################################
 ## Declare things to be passed to other projects ##
@@ -45,6 +42,12 @@ catkin_package(
 ## Declare a cpp executable
 add_executable(urdf_joint_state_publisher src/urdf_joint_state_publisher.cc)
 target_link_libraries(urdf_joint_state_publisher ${catkin_LIBRARIES} )
+
+add_executable(gazebo_bridge src/gazebo_bridge.cc)
+target_link_libraries(gazebo_bridge ${catkin_LIBRARIES} 
+                                    ${GAZEBO_LIBRARIES} 
+                                    ${Boost_LIBRARIES} 
+                                    ${PROTOBUF_LIBRARIES})
 
 # Gazebo Protobufs
 execute_process(COMMAND protoc -I='${CATKIN_PACKAGE_BIN_DESTINATION}/scripts/proto/msg' --python_out='${CATKIN_PACKAGE_BIN_DESTINATION}/scripts/proto' ${CATKIN_PACKAGE_BIN_DESTINATION}/scripts/proto/msg/*.proto

@@ -42,7 +42,7 @@
 
 int main( int argc, char* argv[] )
 {
-  ros::init(argc, argv, "p2os_publisher" );
+  ros::init(argc, argv, "urdf_joint_state_publisher" );
   ros::NodeHandle n;
   ros::NodeHandle n_("~");
   
