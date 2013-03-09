@@ -3,54 +3,116 @@
 import time
            
 import rospy
-from geometry_msgs.msg  import Twist
+import tf
+import geometry_msgs.msg
+import nav_msgs.msg
 
 import gazebo
 from proto.pose_pb2          import Pose
+from proto.pose_v_pb2        import Pose_V
 
+ROBOT_NAME        = "Pioneer3AT"
+GZ_CMD_VEL_TOPIC  = "~/" + ROBOT_NAME + "/vel_cmd";
+ROS_CMD_VEL_TOPIC =  "/" + ROBOT_NAME + "/cmd_vel";
 
-GZ_CMD_VEL_TOPIC  = "~/Pioneer3AT/vel_cmd";
-ROS_CMD_VEL_TOPIC = "/cmd_vel";
-
-GZ_ODOM_TOPIC     = "~/Pioneer3AT/odom";
-ROS_ODOM_TOPIC    = "/odom";
-
-
+GZ_ODOM_TOPIC     = "~/pose/info";
+ROS_ODOM_TOPIC    =  "/" + ROBOT_NAME + "/odom";
     
-# Rebroadcast commands from the autonomous navigation planner
-def ros_cmd_velCB(msg):    
-    print "[ros_cmd_velCB] CMD Rx'd:", msg.linear.x, msg.angular.z
-    cmd_vel               = Pose()
-    cmd_vel.name          = "ROS cmd_vel"
-    cmd_vel.position.x    = msg.linear.x
-    cmd_vel.position.y    = 0
-    cmd_vel.position.z    = msg.angular.z
-    cmd_vel.orientation.x = 0
-    cmd_vel.orientation.y = 0
-    cmd_vel.orientation.z = 0
-    cmd_vel.orientation.w = 0
+    
+class pioneer3at:
+  def __init__(self):
+      self.odom_seq = 0
+      
+      # Gazebo Initialization
+      self.gz = gazebo.gzMaster()
 
-    gz.Publish(GZ_CMD_VEL_TOPIC, cmd_vel)
+      # ROS Initialization
+      rospy.init_node('pioneer3at_gazebo')
+      self.odom_broadcaster = tf.TransformBroadcaster()
+      self.ros_pub_odom = rospy.Publisher(ROS_ODOM_TOPIC, nav_msgs.msg.Odometry)
+      
+      # Subscriptions
+      self.gz.Subscribe(GZ_ODOM_TOPIC, self.gz_odomCB)
+      rospy.Subscriber(ROS_CMD_VEL_TOPIC, geometry_msgs.msg.Twist, self.ros_cmd_velCB)
+      
+      
+  def ros_cmd_velCB(self, msg):
+      #print "[ros_cmd_velCB] CMD Rx'd:", msg.linear.x, msg.angular.z
+      cmd_vel               = Pose()
+      cmd_vel.name          = "ROS cmd_vel"
+      cmd_vel.position.x    = msg.linear.x
+      cmd_vel.position.y    = msg.linear.y
+      cmd_vel.position.z    = msg.linear.z
+      
+      cmd_vel_quat = tf.transformations.quaternion_from_euler(msg.angular.x,
+                                                              msg.angular.y,
+                                                              msg.angular.z)
+      cmd_vel.orientation.x = cmd_vel_quat[0]
+      cmd_vel.orientation.y = cmd_vel_quat[1]
+      cmd_vel.orientation.z = cmd_vel_quat[2]
+      cmd_vel.orientation.w = cmd_vel_quat[3]
+
+      self.gz.Publish(GZ_CMD_VEL_TOPIC, cmd_vel)
 
 
-def gz_odomCB(msg):        
-    x = Pose()
-    x.ParseFromString(msg)
-    print "odomCB>>\n", x
+  def gz_odomCB(self, msg):  
+      try:      
+          x = Pose_V()
+          x.ParseFromString(msg)
+          for p in x.pose:
+              if p.name == ROBOT_NAME:
+                  #print "odomCB>>\n", p
+                  
+                  self.odom_seq += 1
+                  
+                  odom_tf = geometry_msgs.msg.TransformStamped()
+                  odom_tf.header.seq              = self.odom_seq
+                  odom_tf.header.stamp            = rospy.get_rostime()
+                  odom_tf.header.frame_id         = "odom"        
+                  odom_tf.child_frame_id          = "base_link"
+                  odom_tf.transform.translation.x = p.position.x
+                  odom_tf.transform.translation.y = p.position.y
+                  odom_tf.transform.translation.z = p.position.z
+                  #self.odom_broadcaster.sendTransform(odom_tf)
+                  
+                  self.odom_broadcaster.sendTransform(
+                            (p.position.x, p.position.y, p.position.x),
+                            (p.orientation.x, p.orientation.y, 
+                             p.orientation.z, p.orientation.w),
+                             rospy.Time.now(),
+                             "odom",
+                             "base_link")
+                  
+                  odom_out = nav_msgs.msg.Odometry()        
+                  odom_out.header                  = odom_tf.header      
+                  odom_out.child_frame_id          = odom_tf.child_frame_id         
+                  odom_out.pose.pose.position.x    = p.position.x
+                  odom_out.pose.pose.position.y    = p.position.y
+                  odom_out.pose.pose.position.z    = p.position.z        
+                  odom_out.pose.pose.orientation.x = p.orientation.x
+                  odom_out.pose.pose.orientation.y = p.orientation.y
+                  odom_out.pose.pose.orientation.z = p.orientation.z
+                  odom_out.pose.pose.orientation.w = p.orientation.w
+                  odom_out.twist.twist.linear.x = 0
+                  odom_out.twist.twist.linear.y = 0
+                  odom_out.twist.twist.linear.z = 0
+                  odom_out.twist.twist.angular.x = 0
+                  odom_out.twist.twist.angular.y = 0
+                  odom_out.twist.twist.angular.z = 0
+                  self.ros_pub_odom.publish(odom_out)
+              
+      except:
+          print "[gz_odomCB] Error..."
+          pass
+          
 
 
 if __name__ == '__main__':
-    # Gazebo Initialization
-    gz = gazebo.gzMaster()
-    gz.AdvertisePublisher(GZ_CMD_VEL_TOPIC, Pose.DESCRIPTOR.full_name)
-    #gz.Subscribe(GZ_ODOM_TOPIC, gz_odomCB)
-
-    # ROS Initialization
-    rospy.init_node('pioneer3at_gazebo')
-    rospy.Subscriber(ROS_CMD_VEL_TOPIC, Twist, ros_cmd_velCB)
     
+    robot = pioneer3at()
+
     while not rospy.is_shutdown():
-        gz.SpinOnce()
+        robot.gz.SpinOnce()
         time.sleep(0.2)
     
             

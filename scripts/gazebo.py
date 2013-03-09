@@ -57,11 +57,11 @@ class gzSubscriber(asyncore.dispatcher):
         asyncore.loop(timeout=0.5, count=1)
         
     def handle_connect(self):
-        #print "[gzSubscriber] Subscriber Connected."
+        print "[gzSubscriber] Subscriber Connected."
         pass
 
     def handle_close(self):
-        #print "[gzSubscriber] Connection Closed."
+        print "[gzSubscriber] Connection Closed."
         self.close()
         
     def writable(self):
@@ -73,24 +73,29 @@ class gzSubscriber(asyncore.dispatcher):
         
     def handle_read(self):
         #print "[gzSubscriber] Subscriber Read:"
-        data = self.recv(TCP_BUFFER_SIZE)
-        if data:
-            msg_num = 0
-            while msg_num < 100:
-                # Hard Limit for number of messages 
-                # contained within a single TCP packet
-                # to eliminate inf-loop possiblity
-                msg_num += 1
-
-                # Parse Protobuf Packet
-                pk_len = int(data[:8],16) 
-                self.callback(data[8:(pk_len+8)])
-          
-                # Process the next packet if available
-                if len(data) > (pk_len+8):
-                    data = data[(pk_len+8):]
-                else:
-                    break
+        data = ""
+        try:
+            data = self.recv(TCP_BUFFER_SIZE)
+            if data:
+                msg_num = 0
+                while msg_num < 10:
+                    # Hard Limit for number of messages 
+                    # contained within a single TCP packet
+                    # to eliminate inf-loop possiblity
+                    msg_num += 1
+                    
+                    # Parse Protobuf Packet
+                    pk_len = int(data[:8],16)
+                    self.callback(data[8:(pk_len+8)])
+              
+                    # Process the next packet if available
+                    if len(data) > (pk_len+8):
+                        data = data[(pk_len+8):]
+                    else:
+                        break
+        except:
+            #print "[gzSubscriber] handle_read error:", sys.exc_info()
+            pass   
                     
                     
 class gzPublisherHandler(asyncore.dispatcher):
@@ -98,10 +103,8 @@ class gzPublisherHandler(asyncore.dispatcher):
     def __init__(self, sock):
         asyncore.dispatcher.__init__(self, sock)
 
-        
         self.buffer = ""
         self.subinfo = Subscribe()
-        
         
     def handle_read(self):
         data = self.recv(TCP_BUFFER_SIZE)
@@ -138,10 +141,9 @@ class gzPublisherHandler(asyncore.dispatcher):
     def handle_write(self):
         sent        = self.send(self.buffer)
         self.buffer = self.buffer[sent:]
-        print "Buff: ", sent, len(self.buffer)
 
     def handle_close(self): 
-        #print "Subscriber Connection Closed."
+        print "[gzPublisherHandler] Subscriber Connection Closed."
         self.close()
            
         
@@ -163,7 +165,7 @@ class gzPublisher(asyncore.dispatcher):
         pair = self.accept()
         if pair is not None:
             sock, addr = pair
-            #print 'Incoming connection from %s' % repr(addr)
+            print '[gzPublisher] Incoming connection from %s' % repr(addr)
             if self.subscribers == []:
               self.subscribers = [gzPublisherHandler(sock)] 
             else:
@@ -175,8 +177,8 @@ class gzMaster(asyncore.dispatcher):
     def __init__(self, host=MASTER_TCP_IP, port=MASTER_TCP_PORT):
         asyncore.dispatcher.__init__(self)
         
-        self.buffer = ""
-        self.namespace = ""
+        self.buffer        = ""
+        self.namespace     = ""
         self.publishers    = Publishers()
         self.subscriptions = []
         
@@ -193,16 +195,16 @@ class gzMaster(asyncore.dispatcher):
         pass
 
     def handle_close(self):
-        self.close()
         raise IOError("[gzMaster] Connection Closed.")
+        self.close()
 
     def handle_read(self):
-        #print "Connection Read."
+        #print "[gzMaster] Connection Read."
         try:
           data = self.recv(TCP_BUFFER_SIZE)
         except:
           data = ""
-          print "[gzMaster] handle_read recv error"
+          print "[gzMaster] handle_read recv error:", sys.exc_info()
           
         if data:
             msg_num = 0
@@ -233,28 +235,32 @@ class gzMaster(asyncore.dispatcher):
                
               elif pk.type == "publishers_init":
                 self.publishers.ParseFromString(pk.serialized_data)
-                #print "Publishers:\n", self.publishers
+                #print "Publishers_init:\n", self.publishers
                 
               elif pk.type == "publisher_add":
                 x = Publish()
                 x.ParseFromString(pk.serialized_data)
-                print "[gzMaster] Publisher Added:", x.topic, "[" , x.msg_type, "]"
-                self.publishers.publisher.extend([x])            
+                self.publishers.publisher.extend([x])
+                print "[gzMaster] Publisher Added:", x.topic, "[" , x.msg_type, "]"            
                 
               elif pk.type == "publisher_del":
-                x = Publish()
-                x.ParseFromString(pk.serialized_data)            
-                print "[gzMaster] Publisher Deleted:", x.topic, "[" , x.msg_type, "]" 
-                
-                for p in self.publishers.publisher:
-                    if  (p.topic    == x.topic
-                    and  p.host     == x.host 
-                    and  p.port     == x.port 
-                    and  p.msg_type == x.msg_type):
-                        print "Publisher Deleted: \n", p
-                        #self.publishers.publisher.remove(p)
-                        del p
-                
+                  x = Publish()
+                  x.ParseFromString(pk.serialized_data)            
+                  print "[gzMaster] Publisher Deleted:", x.topic, "[" , x.msg_type, "]" 
+                  
+                  for p in self.publishers.publisher:
+                      if  (p.topic    == x.topic
+                      and  p.host     == x.host 
+                      and  p.port     == x.port 
+                      and  p.msg_type == x.msg_type):
+                          print "Publisher Deleted: \n", p
+                          p.Clear
+                          break
+                  print self.publishers
+                  self.publishers.ParseFromString(self.publishers.SerializeToString)
+                  print "============================="                  
+                  print self.publishers
+                  
               elif pk.type == "unsubscribe":
                 x = Subscribe()
                 x.ParseFromString(pk.serialized_data)
@@ -266,9 +272,8 @@ class gzMaster(asyncore.dispatcher):
                     and  s.subinfo.port     == x.port 
                     and  s.subinfo.msg_type == x.msg_type):
                         print "Sub Deleted: \n", s.subinfo
-                        #self.Pub.subscribers.remove(s)
                         del s
-                
+                        
               else:
                 print "[gzMaster] Unhandled Packet: ", pk.type, "\n", pk.serialized_data
               
@@ -283,23 +288,35 @@ class gzMaster(asyncore.dispatcher):
         return (len(self.buffer) > 0)
 
     def handle_write(self):
-        #print "Connection GO GO GO!"
+        print "[gzMaster] Sending Data"
         sent = self.send(self.buffer)
         self.buffer = self.buffer[sent:]
     
     def WaitForMaster(self):
         # Wait for Master connection (Hack)
         if self.namespace == "":
-            while self.namespace == "":
-                print "[gzMaster] Waiting for Master..."
+            max_loops = 100
+            while (self.namespace == "" and max_loops > 0):
+                max_loops -= 1
                 self.SpinOnce()
+                
+            if max_loops == 0:
+              raise IOError("Timeout waiting for Master")
                         
     def AdvertisePublisher(self, topic, msg_type):
         
-        self.WaitForMaster()
-            
-        # Insert namespace        
+        # Insert namespace 
+        self.WaitForMaster()       
         topic = topic.replace("~", self.namespace)
+
+        for p in self.publishers.publisher:
+            if (p.topic    == topic  
+            and p.msg_type == msg_type
+            and p.host     == NODE_TCP_IP 
+            and p.port     == NODE_TCP_PORT ):
+                #print "[AdvertisePublisher] Publisher Exists"
+                return
+        print "[AdvertisePublisher] Publisher Submitted"
       
         # Register as a Gazebo Publisher
         pk            = Packet()
@@ -319,13 +336,19 @@ class gzMaster(asyncore.dispatcher):
         self.SpinOnce()   
         
     def Publish(self, topic, msg):
-
+        
         # Insert namespace
+        self.WaitForMaster()
         topic = topic.replace("~", self.namespace)
-
+  
+        # Advertise publisher if needed
+        self.AdvertisePublisher(topic, msg.DESCRIPTOR.full_name)
+  
         # Publish Packet to all subscribers
         for s in self.Pub.subscribers:
-            if s.subinfo.topic == topic:                         
+            if (s.subinfo.topic    == topic
+            and s.subinfo.msg_type == msg.DESCRIPTOR.full_name  ):                         
+                print "[Publish] Found sub: ", s.subinfo.host, s.subinfo.port
                 pk_pub                 = Packet()
                 pk_pub.type            = msg.DESCRIPTOR.full_name
                 pk_pub.stamp.sec       = int(time.time())
