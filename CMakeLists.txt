@@ -43,15 +43,17 @@ catkin_package(
 add_executable(urdf_joint_state_publisher src/urdf_joint_state_publisher.cc)
 target_link_libraries(urdf_joint_state_publisher ${catkin_LIBRARIES} )
 
-add_executable(gazebo_bridge src/gazebo_bridge.cc)
-target_link_libraries(gazebo_bridge ${catkin_LIBRARIES} 
-                                    ${GAZEBO_LIBRARIES} 
-                                    ${Boost_LIBRARIES} 
-                                    ${PROTOBUF_LIBRARIES})
-
-# Gazebo Protobufs
-execute_process(COMMAND protoc -I='${CATKIN_PACKAGE_BIN_DESTINATION}/scripts/proto/msg' --python_out='${CATKIN_PACKAGE_BIN_DESTINATION}/scripts/proto' ${CATKIN_PACKAGE_BIN_DESTINATION}/scripts/proto/msg/*.proto
-                WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
+add_executable(       gazebo_bridge     src/gazebo_bridge.cc)
+target_link_libraries(gazebo_bridge     ${catkin_LIBRARIES} 
+                                        ${GAZEBO_LIBRARIES} 
+                                        ${Boost_LIBRARIES} 
+                                        ${PROTOBUF_LIBRARIES})
+                                    
+add_executable(       gazebo_laserscan  src/gazebo_laserscan.cc)
+target_link_libraries(gazebo_laserscan  ${catkin_LIBRARIES} 
+                                        ${GAZEBO_LIBRARIES} 
+                                        ${Boost_LIBRARIES} 
+                                        ${PROTOBUF_LIBRARIES})
 
 #############
 ## Install ##
@@ -72,6 +74,8 @@ install(PROGRAMS  scripts/init_amcl
 
 ## Mark executables and/or libraries for installation
 install(TARGETS urdf_joint_state_publisher
+                gazebo_bridge
+                gazebo_laserscan
   RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )
 
