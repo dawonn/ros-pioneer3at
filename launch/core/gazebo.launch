@@ -1,4 +1,4 @@
 <launch>
 	<!-- run script to control the vitual pioneer -->
-	<node pkg="pioneer3at" type="gazebo_p3at" name="gazebo_p3at" />	
+	<node pkg="pioneer3at" type="gazebo_bridge" name="Pioneer3AT" />	
 </launch>

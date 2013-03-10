@@ -30,8 +30,8 @@
 gazebo::transport::PublisherPtr gz_vel_cmd_pub;
 ros::Publisher ros_odom_pub;
 tf::TransformBroadcaster *odom_broadcaster;
-
 int ros_odom_pub_seq;
+std::string gName;
 
 /////////////////////////////////////////////////
 void ros_cmd_vel_Callback(const geometry_msgs::Twist::ConstPtr& msg_in)
@@ -60,7 +60,7 @@ void gz_odom_Callback(ConstPose_VPtr &msg_in)
   geometry_msgs::Quaternion odom_quat = tf::createQuaternionMsgFromYaw(0);
   
   for (int i = 0; i < msg_in->pose_size(); i++) 
-    if(msg_in->pose(i).name() == "Pioneer3AT")
+    if(msg_in->pose(i).name() == gName)
     {
       //std::cout << msg_in->pose(i).DebugString() << std::endl;
       x = msg_in->pose(i).position().x();
@@ -98,29 +98,31 @@ void gz_odom_Callback(ConstPose_VPtr &msg_in)
 /////////////////////////////////////////////////
 int main( int argc, char* argv[] )
 {
-  // Initialize Gazebo
-  gazebo::transport::init();
-  gazebo::transport::NodePtr node(new gazebo::transport::Node());
-  node->Init();
-  gazebo::transport::run();
-  gz_vel_cmd_pub = node->Advertise<gazebo::msgs::Pose>("~/Pioneer3AT/vel_cmd");
-  gz_vel_cmd_pub->WaitForConnection();
-  
   // Initialize ROS
   ros::init(argc, argv, "Pioneer3AT");
+  gName = ros::this_node::getName();
   ros::NodeHandle n_("~");
   ros::Rate loop_rate(10);
   ros_odom_pub = n_.advertise<nav_msgs::Odometry>("odom", 10);
   odom_broadcaster = new tf::TransformBroadcaster;
   ros_odom_pub_seq = 0;
   
+  
+  // Initialize Gazebo
+  gazebo::transport::init();
+  gazebo::transport::NodePtr node(new gazebo::transport::Node());
+  node->Init();
+  gazebo::transport::run();
+  gz_vel_cmd_pub = node->Advertise<gazebo::msgs::Pose>(std::string("~") + gName + 
+                                                       std::string("/vel_cmd") );
+    
   // Subscribers
   gazebo::transport::SubscriberPtr gz_odom_sub = node->Subscribe("~/pose/info", gz_odom_Callback);
   ros::Subscriber ros_cmd_vel_sub = n_.subscribe("cmd_vel", 10, ros_cmd_vel_Callback);
   
   // Spin
   ros::spin();
-    
+
   // Shutdown
   gazebo::transport::fini();
 }
