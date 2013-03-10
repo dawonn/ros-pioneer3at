@@ -4,9 +4,9 @@
 
   
 throttle_scans:       1
-base_frame:           base_link
+base_frame:           /Pioneer3AT/chassis
 map_frame:            map
-odom_frame:           odom
+odom_frame:           /Pioneer3AT/odom
 map_update_interval:  5.0 
 
 # Unset maxUrange and maxRange and it will autodetect

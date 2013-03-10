@@ -31,7 +31,11 @@ gazebo::transport::PublisherPtr gz_vel_cmd_pub;
 ros::Publisher ros_odom_pub;
 tf::TransformBroadcaster *odom_broadcaster;
 int ros_odom_pub_seq;
-std::string gName;
+std::string ros_odom_frame;
+std::string ros_child_frame;
+std::string gz_model_name;
+double ros_odom_tf_future_date;
+
 
 /////////////////////////////////////////////////
 void ros_cmd_vel_Callback(const geometry_msgs::Twist::ConstPtr& msg_in)
@@ -60,7 +64,7 @@ void gz_odom_Callback(ConstPose_VPtr &msg_in)
   geometry_msgs::Quaternion odom_quat = tf::createQuaternionMsgFromYaw(0);
   
   for (int i = 0; i < msg_in->pose_size(); i++) 
-    if(msg_in->pose(i).name() == gName)
+    if(msg_in->pose(i).name() == gz_model_name)
     {
       //std::cout << msg_in->pose(i).DebugString() << std::endl;
       x = msg_in->pose(i).position().x();
@@ -73,13 +77,14 @@ void gz_odom_Callback(ConstPose_VPtr &msg_in)
     }    
 
   geometry_msgs::TransformStamped odom_trans;
-  odom_trans.header.stamp = ros::Time::now();
-  odom_trans.header.frame_id = "odom";
-  odom_trans.child_frame_id = "base_link";
-  odom_trans.transform.translation.x = x;
-  odom_trans.transform.translation.y = y;
-  odom_trans.transform.translation.z = 0.0;
-  odom_trans.transform.rotation = odom_quat;
+  ros::Duration future_date(ros_odom_tf_future_date);
+  odom_trans.header.stamp             = ros::Time::now() + future_date;
+  odom_trans.header.frame_id          = ros_odom_frame;
+  odom_trans.child_frame_id           = ros_child_frame;
+  odom_trans.transform.translation.x  = x;
+  odom_trans.transform.translation.y  = y;
+  odom_trans.transform.translation.z  = 0.0;
+  odom_trans.transform.rotation       = odom_quat;
   odom_broadcaster->sendTransform(odom_trans);
 
   nav_msgs::Odometry odom;
@@ -99,26 +104,35 @@ void gz_odom_Callback(ConstPose_VPtr &msg_in)
 int main( int argc, char* argv[] )
 {
   // Initialize ROS
-  ros::init(argc, argv, "Pioneer3AT");
-  gName = ros::this_node::getName();
+  ros::init(argc, argv, "Gazebo_Bridge");
+  ros::NodeHandle n;
   ros::NodeHandle n_("~");
-  ros::Rate loop_rate(10);
-  ros_odom_pub = n_.advertise<nav_msgs::Odometry>("odom", 10);
+  
+  n_.param<std::string>("ros_odom_frame", ros_odom_frame,   "/odom");
+  n_.param<std::string>("ros_child_frame", ros_child_frame, "/base_link");
+  n_.param<double>("ros_odom_tf_future_date", ros_odom_tf_future_date,  0.5);
+  
+  n_.param<std::string>("gz_model_name", gz_model_name,   "Pioneer3AT");
+  std::string gz_pose_topic;
+  n_.param<std::string>("gz_pose_topic", gz_pose_topic, "~/pose/info");
+  std::string gz_cmd_vel_topic;
+  n_.param<std::string>("gz_cmd_vel_topic", gz_cmd_vel_topic, "~/vel_cmd");
+  
+  ros_odom_pub = n.advertise<nav_msgs::Odometry>("/odom", 100);
   odom_broadcaster = new tf::TransformBroadcaster;
   ros_odom_pub_seq = 0;
-  
+    
   
   // Initialize Gazebo
   gazebo::transport::init();
   gazebo::transport::NodePtr node(new gazebo::transport::Node());
   node->Init();
   gazebo::transport::run();
-  gz_vel_cmd_pub = node->Advertise<gazebo::msgs::Pose>(std::string("~") + gName + 
-                                                       std::string("/vel_cmd") );
+  gz_vel_cmd_pub = node->Advertise<gazebo::msgs::Pose>(gz_cmd_vel_topic);
     
   // Subscribers
-  gazebo::transport::SubscriberPtr gz_odom_sub = node->Subscribe("~/pose/info", gz_odom_Callback);
-  ros::Subscriber ros_cmd_vel_sub = n_.subscribe("cmd_vel", 10, ros_cmd_vel_Callback);
+  gazebo::transport::SubscriberPtr gz_odom_sub = node->Subscribe(gz_pose_topic, gz_odom_Callback);
+  ros::Subscriber ros_cmd_vel_sub = n.subscribe("/cmd_vel", 1, ros_cmd_vel_Callback);
   
   // Spin
   ros::spin();

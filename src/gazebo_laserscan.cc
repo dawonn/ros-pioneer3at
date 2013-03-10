@@ -24,8 +24,9 @@
 #include <gazebo/transport/transport.hh>
 #include <gazebo/msgs/msgs.hh>
 
-std::string NodeName;
 ros::Publisher ros_laserscan_pub;
+std::string ros_laserscan_frame;
+bool use_sim_time;
 
 /////////////////////////////////////////////////
 void gz_laserscan_Callback(ConstLaserScanStampedPtr &msg_in)
@@ -39,10 +40,18 @@ void gz_laserscan_Callback(ConstLaserScanStampedPtr &msg_in)
   msg_out.scan_time         = 0;
   msg_out.range_min         = msg_in->scan().range_min();
   msg_out.range_max         = msg_in->scan().range_max();
-  uint32_t sec = msg_in->time().sec();
-  uint32_t nsec = msg_in->time().nsec();
-  msg_out.header.stamp      = ros::Time( sec, nsec );
-  msg_out.header.frame_id   = NodeName + "/laser_scan";
+  msg_out.header.frame_id   = ros_laserscan_frame;
+  
+  if(use_sim_time)
+  {
+    uint32_t sec = msg_in->time().sec();
+    uint32_t nsec = msg_in->time().nsec();
+    msg_out.header.stamp    = ros::Time( sec, nsec );
+  }
+  else
+  {
+    msg_out.header.stamp    = ros::Time::now();
+  }
   
   for(int i = 0; i < msg_in->scan().ranges_size(); i++){
     msg_out.ranges.push_back( msg_in->scan().ranges(i) );
@@ -58,20 +67,24 @@ void gz_laserscan_Callback(ConstLaserScanStampedPtr &msg_in)
 int main( int argc, char* argv[] )
 {
   // Initialize ROS
-  ros::init(argc, argv, "Pioneer3AT");
-  NodeName = ros::this_node::getName();
+  ros::init(argc, argv, "Gazebo_laserscan");
+  ros::NodeHandle n;
   ros::NodeHandle n_("~");
-  ros_laserscan_pub = n_.advertise<sensor_msgs::LaserScan>("laserscan", 10);
-  
-  
+  ros_laserscan_frame = "";
+  n.param<bool>("/use_sim_time", use_sim_time, 0);
+  n_.getParam("ros_laserscan_frame", ros_laserscan_frame);
+  ros_laserscan_pub = n.advertise<sensor_msgs::LaserScan>("scan", 100);
+    
   // Initialize Gazebo
   gazebo::transport::init();
   gazebo::transport::NodePtr gz_node(new gazebo::transport::Node());
   gz_node->Init();
   gazebo::transport::run();
-  gazebo::transport::SubscriberPtr gz_lasersacn_sub = gz_node->Subscribe( std::string("~") +
-   NodeName + std::string("/hokuyo/link/laser/scan"), gz_laserscan_Callback);
   
+  std::string gz_laserscan_topic = "";
+  n_.getParam("gz_laserscan_topic", gz_laserscan_topic);
+  gazebo::transport::SubscriberPtr gz_laserscan_sub = gz_node->Subscribe( gz_laserscan_topic,
+                                                                          gz_laserscan_Callback);
   // Spin
   ros::spin();
 

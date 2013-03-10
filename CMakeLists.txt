@@ -40,8 +40,8 @@ catkin_package(
 ###########
 
 ## Declare a cpp executable
-add_executable(urdf_joint_state_publisher src/urdf_joint_state_publisher.cc)
-target_link_libraries(urdf_joint_state_publisher ${catkin_LIBRARIES} )
+add_executable(       joint_state_publisher src/joint_state_publisher.cc)
+target_link_libraries(joint_state_publisher ${catkin_LIBRARIES} )
 
 add_executable(       gazebo_bridge     src/gazebo_bridge.cc)
 target_link_libraries(gazebo_bridge     ${catkin_LIBRARIES} 
@@ -73,7 +73,7 @@ install(PROGRAMS  scripts/init_amcl
   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})
 
 ## Mark executables and/or libraries for installation
-install(TARGETS urdf_joint_state_publisher
+install(TARGETS joint_state_publisher
                 gazebo_bridge
                 gazebo_laserscan
   RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}

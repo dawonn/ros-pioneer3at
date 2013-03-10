@@ -13,6 +13,7 @@
 	-->
 	<!-- <include file="$(find pioneer3at)/launch/lidar/sicklms.launch" /> --> 
 	<!-- <include file="$(find pioneer3at)/launch/lidar/hokuyo.launch" /> -->
+	<include file="$(find pioneer3at)/launch/lidar/gazebo_hokuyo.launch" /> 
 	
 	
 	<!-- 

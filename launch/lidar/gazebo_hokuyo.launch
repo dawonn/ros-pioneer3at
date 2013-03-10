@@ -1,0 +1,12 @@
+<launch>
+	<node pkg="pioneer3at" type="gazebo_laserscan" name="Pioneer3AT_laserscan" >
+	  <param name="ros_laserscan_frame" type="str" value="/Pioneer3AT/laserscan" />
+	  
+	  <param name="gz_laserscan_topic" type="str" value="~/Pioneer3AT/hokuyo/link/laser/scan" />
+	  
+	  <remap from="/scan" to="/Pioneer3AT/laserscan" />
+	</node>
+	
+		<!-- publish static transform from the center of the robot to the laser rangefinder (required for slam_gmapping) -->
+	<node pkg="tf" type="static_transform_publisher" name="laserscan_tf" args="0.2 0 0.13 0 0 0 /Pioneer3AT/chassis /Pioneer3AT/laserscan 100" />
+</launch>

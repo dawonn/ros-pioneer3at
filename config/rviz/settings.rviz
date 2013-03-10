@@ -6,9 +6,11 @@ Panels:
       Expanded:
         - /Global Options1
         - /Status1
-        - /Navigation1
-      Splitter Ratio: 0.476077
-    Tree Height: 350
+        - /Pioneer3 AT1
+        - /Pioneer3 AT1/RobotModel1/Status1
+        - /Pioneer3 AT1/LaserScan1/Status1
+      Splitter Ratio: 0.664
+    Tree Height: 500
   - Class: rviz/Selection
     Name: Selection
   - Class: rviz/Tool Properties
@@ -23,7 +25,10 @@ Panels:
     Name: Views
     Splitter Ratio: 0.5
   - Class: rviz/Time
+    Experimental: false
     Name: Time
+    SyncMode: 0
+    SyncSource: LaserScan
 Visualization Manager:
   Class: ""
   Displays:
@@ -139,12 +144,37 @@ Visualization Manager:
               Show Axes: false
               Show Trail: false
               Value: true
-            back_sonar:
+            chassis:
               Alpha: 1
               Show Axes: false
               Show Trail: false
               Value: true
-            base_link:
+            front_left_axle:
+              Alpha: 1
+              Show Axes: false
+              Show Trail: false
+              Value: true
+            front_left_hub:
+              Alpha: 1
+              Show Axes: false
+              Show Trail: false
+              Value: true
+            front_left_wheel:
+              Alpha: 1
+              Show Axes: false
+              Show Trail: false
+              Value: true
+            front_right_axle:
+              Alpha: 1
+              Show Axes: false
+              Show Trail: false
+              Value: true
+            front_right_hub:
+              Alpha: 1
+              Show Axes: false
+              Show Trail: false
+              Value: true
+            front_right_wheel:
               Alpha: 1
               Show Axes: false
               Show Trail: false
@@ -154,62 +184,37 @@ Visualization Manager:
               Show Axes: false
               Show Trail: false
               Value: true
-            p3at_back_left_axle:
+            rear_left_axle:
               Alpha: 1
               Show Axes: false
               Show Trail: false
               Value: true
-            p3at_back_left_hub:
+            rear_left_hub:
               Alpha: 1
               Show Axes: false
               Show Trail: false
               Value: true
-            p3at_back_left_wheel:
+            rear_left_wheel:
               Alpha: 1
               Show Axes: false
               Show Trail: false
               Value: true
-            p3at_back_right_axle:
+            rear_right_axle:
               Alpha: 1
               Show Axes: false
               Show Trail: false
               Value: true
-            p3at_back_right_hub:
+            rear_right_hub:
               Alpha: 1
               Show Axes: false
               Show Trail: false
               Value: true
-            p3at_back_right_wheel:
+            rear_right_wheel:
               Alpha: 1
               Show Axes: false
               Show Trail: false
               Value: true
-            p3at_front_left_axle:
-              Alpha: 1
-              Show Axes: false
-              Show Trail: false
-              Value: true
-            p3at_front_left_hub:
-              Alpha: 1
-              Show Axes: false
-              Show Trail: false
-              Value: true
-            p3at_front_left_wheel:
-              Alpha: 1
-              Show Axes: false
-              Show Trail: false
-              Value: true
-            p3at_front_right_axle:
-              Alpha: 1
-              Show Axes: false
-              Show Trail: false
-              Value: true
-            p3at_front_right_hub:
-              Alpha: 1
-              Show Axes: false
-              Show Trail: false
-              Value: true
-            p3at_front_right_wheel:
+            rear_sonar:
               Alpha: 1
               Show Axes: false
               Show Trail: false
@@ -220,8 +225,8 @@ Visualization Manager:
               Show Trail: false
               Value: true
           Name: RobotModel
-          Robot Description: robot_description
-          TF Prefix: ""
+          Robot Description: /Pioneer3AT/urdf
+          TF Prefix: Pioneer3AT
           Update Interval: 0
           Value: true
           Visual Enabled: true
@@ -248,7 +253,7 @@ Visualization Manager:
           Size (Pixels): 3
           Size (m): 0.06
           Style: Spheres
-          Topic: /pioneer3at/laser_scan
+          Topic: /Pioneer3AT/laserscan
           Use Fixed Frame: true
           Use rainbow:
             Max Color: 255; 255; 255
@@ -263,15 +268,15 @@ Visualization Manager:
           Length: 0.3
           Name: Odometry
           Position Tolerance: 0.3
-          Topic: /pose
+          Topic: /Pioneer3AT/odom
           Value: true
         - Arrow Length: 0.3
           Class: rviz/PoseArray
           Color: 170; 255; 255
-          Enabled: true
+          Enabled: false
           Name: PoseArray
           Topic: /particlecloud
-          Value: true
+          Value: false
       Enabled: true
       Name: Pioneer3 AT
     - Class: rviz/Group
@@ -305,15 +310,16 @@ Visualization Manager:
           Name: Local Costmap
           Topic: /move_base/local_costmap/inflated_obstacles
           Value: true
-      Enabled: true
+      Enabled: false
       Name: Navigation
   Enabled: true
   Global Options:
     Background Color: 48; 48; 48
-    Fixed Frame: /map
+    Fixed Frame: /Pioneer3AT/odom
   Name: root
   Tools:
     - Class: rviz/Interact
+      Hide Inactive Objects: true
     - Class: rviz/MoveCamera
     - Class: rviz/Select
     - Class: rviz/Measure
@@ -324,23 +330,26 @@ Visualization Manager:
   Value: true
   Views:
     Current:
-      Angle: 0
-      Class: rviz/TopDownOrtho
+      Class: rviz/Orbit
+      Distance: 13.1868
+      Focal Point:
+        X: -0.988224
+        Y: -1.01
+        Z: 0.125723
       Name: Current View
       Near Clip Distance: 0.01
-      Scale: 43.2757
+      Pitch: 0.509797
       Target Frame: <Fixed Frame>
-      Value: TopDownOrtho (rviz)
-      X: 2.07732
-      Y: -0.0186109
+      Value: Orbit (rviz)
+      Yaw: 3.85633
     Saved: ~
 Window Geometry:
   Displays:
     collapsed: false
-  Height: 599
+  Height: 749
   Hide Left Dock: false
   Hide Right Dock: true
-  QMainWindow State: 000000ff00000000fd0000000400000000000001a4000001edfc0200000005fb0000001200530065006c0065006300740069006f006e00000001e10000009b0000006400fffffffb0000001e0054006f006f006c002000500072006f007000650072007400690065007302000001ed000001df00000185000000a3fb000000120056006900650077007300200054006f006f02000001df000002110000018500000122fb000000200054006f006f006c002000500072006f0070006500720074006900650073003203000002880000011d000002210000017afb000000100044006900730070006c0061007900730100000028000001ed000000dd00ffffff000000010000010f000001c9fc0200000003fb0000001e0054006f006f006c002000500072006f00700065007200740069006500730100000041000000780000000000000000fb0000000a005600690065007700730000000028000001c9000000b000fffffffb0000001200530065006c0065006300740069006f006e010000025a000000b200000000000000000000000200000490000000a9fc0100000001fb0000000a00560069006500770073030000004e00000080000002e10000019700000003000004a00000003efc0100000004fb0000000800540069006d00650000000000000004a0000002bf00fffffffb0000000800540069006d00650100000000000004500000000000000000fb0000004c007200710074005f0063006f006e0073006f006c0065005f005f0043006f006e0073006f006c0065005f005f0031005f005f0043006f006e0073006f006c006500570069006400670065007403000002b70000030d0000028900000301fb00000066007200710074005f006c006f0067006700650072005f006c006500760065006c005f005f004c006f0067006700650072004c006500760065006c005f005f0031005f005f004c006f0067006700650072004c006500760065006c00570069006400670065007403000002b50000020a000001d5000001c50000032d000001ed00000004000000040000000800000008fc0000000100000002000000010000000a0054006f006f006c00730100000000ffffffff0000000000000000
+  QMainWindow State: 000000ff00000000fd00000004000000000000020600000283fc0200000005fb0000001200530065006c0065006300740069006f006e00000001e10000009b0000006400fffffffb0000001e0054006f006f006c002000500072006f007000650072007400690065007302000001ed000001df00000185000000a3fb000000120056006900650077007300200054006f006f02000001df000002110000018500000122fb000000200054006f006f006c002000500072006f0070006500720074006900650073003203000002880000011d000002210000017afb000000100044006900730070006c006100790073010000002800000283000000dd00ffffff000000010000010f0000025ffc0200000003fb0000001e0054006f006f006c002000500072006f00700065007200740069006500730100000041000000780000000000000000fb0000000a0056006900650077007300000000280000025f000000b000fffffffb0000001200530065006c0065006300740069006f006e010000025a000000b200000000000000000000000200000490000000a9fc0100000001fb0000000a00560069006500770073030000004e00000080000002e10000019700000003000004a00000003efc0100000004fb0000000800540069006d00650000000000000004a0000002f600fffffffb0000000800540069006d00650100000000000004500000000000000000fb0000004c007200710074005f0063006f006e0073006f006c0065005f005f0043006f006e0073006f006c0065005f005f0031005f005f0043006f006e0073006f006c006500570069006400670065007403000002b70000030d0000028900000301fb00000066007200710074005f006c006f0067006700650072005f006c006500760065006c005f005f004c006f0067006700650072004c006500760065006c005f005f0031005f005f004c006f0067006700650072004c006500760065006c00570069006400670065007403000002b50000020a000001d5000001c5000001f80000028300000004000000040000000800000008fc0000000100000002000000010000000a0054006f006f006c00730100000000ffffffff0000000000000000
   Selection:
     collapsed: false
   Time:
@@ -349,6 +358,6 @@ Window Geometry:
     collapsed: false
   Views:
     collapsed: true
-  Width: 1255
-  X: -25
-  Y: -1
+  Width: 1044
+  X: 1703
+  Y: 97
