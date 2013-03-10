@@ -28,6 +28,10 @@
 #include <iostream>
 
 gazebo::transport::PublisherPtr gz_vel_cmd_pub;
+ros::Publisher ros_odom_pub;
+tf::TransformBroadcaster *odom_broadcaster;
+
+int ros_odom_pub_seq;
 
 /////////////////////////////////////////////////
 void ros_cmd_vel_Callback(const geometry_msgs::Twist::ConstPtr& msg_in)
@@ -47,6 +51,51 @@ void ros_cmd_vel_Callback(const geometry_msgs::Twist::ConstPtr& msg_in)
 }
 
 /////////////////////////////////////////////////
+void gz_odom_Callback(ConstPose_VPtr &msg_in)
+{ 
+  //std::cout << "gz_odom" << msg_in->DebugString() << std::endl;
+
+  float x  = 0;
+  float y  = 0;
+  geometry_msgs::Quaternion odom_quat = tf::createQuaternionMsgFromYaw(0);
+  
+  for (int i = 0; i < msg_in->pose_size(); i++) 
+    if(msg_in->pose(i).name() == "Pioneer3AT")
+    {
+      //std::cout << msg_in->pose(i).DebugString() << std::endl;
+      x = msg_in->pose(i).position().x();
+      y = msg_in->pose(i).position().y();
+      odom_quat.x = msg_in->pose(i).orientation().x();
+      odom_quat.y = msg_in->pose(i).orientation().y();
+      odom_quat.z = msg_in->pose(i).orientation().z();
+      odom_quat.w = msg_in->pose(i).orientation().w();
+      break;
+    }    
+
+  geometry_msgs::TransformStamped odom_trans;
+  odom_trans.header.stamp = ros::Time::now();
+  odom_trans.header.frame_id = "odom";
+  odom_trans.child_frame_id = "base_link";
+  odom_trans.transform.translation.x = x;
+  odom_trans.transform.translation.y = y;
+  odom_trans.transform.translation.z = 0.0;
+  odom_trans.transform.rotation = odom_quat;
+  odom_broadcaster->sendTransform(odom_trans);
+
+  nav_msgs::Odometry odom;
+  odom.header                 = odom_trans.header;
+  odom.child_frame_id         = odom_trans.child_frame_id;
+  odom.pose.pose.position.x   = x;
+  odom.pose.pose.position.y   = y;
+  odom.pose.pose.position.z   = 0.0;
+  odom.pose.pose.orientation  = odom_quat;
+  odom.twist.twist.linear.x   = 0.0;  //vx;
+  odom.twist.twist.linear.y   = 0.0;  //vy;
+  odom.twist.twist.angular.z  = 0.0;  //vth;
+  ros_odom_pub.publish(odom);
+}
+
+/////////////////////////////////////////////////
 int main( int argc, char* argv[] )
 {
   // Initialize Gazebo
@@ -57,15 +106,25 @@ int main( int argc, char* argv[] )
   gz_vel_cmd_pub = node->Advertise<gazebo::msgs::Pose>("~/Pioneer3AT/vel_cmd");
   gz_vel_cmd_pub->WaitForConnection();
   
-  
   // Initialize ROS
-  ros::init(argc, argv, "gazebo_bridge");
-  //ros::NodeHandle n;
+  ros::init(argc, argv, "Pioneer3AT");
   ros::NodeHandle n_("~");
   ros::Rate loop_rate(10);
-  ros::Subscriber sub = n_.subscribe("/Pioneer3AT/cmd_vel", 10, ros_cmd_vel_Callback);
+  ros_odom_pub = n_.advertise<nav_msgs::Odometry>("odom", 10);
+  odom_broadcaster = new tf::TransformBroadcaster;
+  ros_odom_pub_seq = 0;
+  
+  // Subscribers
+  gazebo::transport::SubscriberPtr gz_odom_sub = node->Subscribe("~/pose/info", gz_odom_Callback);
+  ros::Subscriber ros_cmd_vel_sub = n_.subscribe("cmd_vel", 10, ros_cmd_vel_Callback);
+  
+  // Spin
   ros::spin();
     
-  // Make sure to shut everything down.
+  // Shutdown
   gazebo::transport::fini();
 }
+
+
+
+
