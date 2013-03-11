@@ -36,6 +36,7 @@
 #include <ros/ros.h>
 #include <sensor_msgs/JointState.h>
 
+double tf_future_date;
 
 int main( int argc, char* argv[] )
 {
@@ -43,6 +44,7 @@ int main( int argc, char* argv[] )
   ros::NodeHandle n;
   ros::NodeHandle n_("~");  
   ros::Publisher joint_state_pub = n.advertise<sensor_msgs::JointState>("joint_states", 10);
+  n_.param<double>("tf_future_date", tf_future_date,  0.1);
   
   double wheel_vel = 0.0;
   double wheel_rot = 0.0;
@@ -76,7 +78,8 @@ int main( int argc, char* argv[] )
 	  js.velocity.push_back(wheel_vel);
 	  js.position.push_back(wheel_rot);
 
-    js.header.stamp = ros::Time::now();
+    ros::Duration future_date(tf_future_date);
+    js.header.stamp = ros::Time::now() + future_date;
 		joint_state_pub.publish(js);
 		
 		ros::spinOnce();

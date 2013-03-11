@@ -1,6 +1,7 @@
 
 base_global_planner: navfn/NavfnROS
 base_local_planner: base_local_planner/TrajectoryPlannerROS
+
 recovery_behaviors: [{
     name: conservative_reset, 
     type: clear_costmap_recovery/ClearCostmapRecovery
@@ -15,10 +16,10 @@ recovery_behaviors: [{
     type: rotate_recovery/RotateRecovery
   }]
   
-planner_frequency:          0.5
-controller_frequency:       5
+planner_frequency:          2
+controller_frequency:       .01
 planner_patience:           10.0
-controller_patience:        5.0
+controller_patience:        500.0
 conservative_reset_dist:    3.0
 recovery_behavior_enabled:  true
 clearing_rotation_allowed:  true
@@ -35,8 +36,8 @@ NavfnROS:
   planner_window_x:                   0.0
   planner_window_y:                   0.0
   default_tolerance:                  0.05
-  visualize_potential:                false
-  planner_costmap_publish_frequency:  0.2
+  visualize_potential:                true
+  planner_costmap_publish_frequency:  10
   
   
 
@@ -72,15 +73,15 @@ TrajectoryPlannerROS:
   
 # Trajectory Scoring Parameters
   meter_scoring:              true
-  path_distance_bias:         500
-  goal_distance_bias:         24
+  path_distance_bias:         1
+  goal_distance_bias:         1
   occdist_scale:              0.01
   heading_lookahead:          0.325
   heading_scoring:            true
   heading_scoring_timestep:   0.8
   dwa:                        true
   publish_cost_grid_pc:       false
-  global_frame_id:            odom
+  global_frame_id:            /Pioneer3AT/odom
   
 # Oscillation Prevention Parameters
   oscillation_reset_dist:     0.1
@@ -89,6 +90,7 @@ TrajectoryPlannerROS:
   prune_plan:                 true
   
   
-  
+### Map management parameters ###
+# Located in costmap_global.yaml & _local.yaml
   
   

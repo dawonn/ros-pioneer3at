@@ -7,6 +7,7 @@
 		<rosparam file="$(find pioneer3at)/config/move_base/costmap_local.yaml" command="load"/>
 		
 		<remap from="/cmd_vel" to="/move_base/cmd_vel" />
+		<remap from="/odom"    to="/Pioneer3AT/odom" />
 	</node>
 
 </launch>

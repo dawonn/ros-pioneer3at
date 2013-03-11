@@ -10,6 +10,8 @@
   </node>
   
 	<node pkg="pioneer3at" type="joint_state_publisher" name="joint_state_publisher">
+	  <param name="tf_future_date" type="double" value="0.05" />
+	  
     <remap from="joint_states" to="/Pioneer3AT/joint_states"/>
   </node>
 	

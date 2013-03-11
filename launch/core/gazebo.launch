@@ -3,7 +3,7 @@
 	<node pkg="pioneer3at" type="gazebo_bridge" name="Pioneer3AT_Gazebo" >	
 	  <param name="ros_odom_frame"          type="str"    value="/Pioneer3AT/odom" />
 	  <param name="ros_child_frame"         type="str"    value="/Pioneer3AT/chassis" />
-	  <param name="ros_odom_tf_future_date" type="double" value="0.1" />
+	  <param name="ros_odom_tf_future_date" type="double" value="0.05" />
 	  
 	  <param name="gz_model_name"     type="str" value="Pioneer3AT" />
 	  <param name="gz_pose_topic"     type="str" value="~/pose/info" />

@@ -1,6 +1,34 @@
 global_costmap:
   global_frame: /map
-  robot_base_frame: base_link
-  update_frequency:  1.0
-  publish_frequency: 1.0
-  static_map: true
+  update_frequency:  5.0
+  publish_frequency: 5.0
+ 
+ ### Map management parameters ### 
+  static_map:             true
+  rolling_window:         false
+  unknown_cost_value:     0
+  publish_voxel_map:      false
+  lethal_cost_threshold:  100
+  map_topic:              /map
+
+  # The following parameters are overwritten if "static_map" is set to true:
+  #width:                 10
+  #height:                10
+  #resolution:            0.05
+  #origin_x:              0.0
+  #origin_y:              0.0
+
+  ### Map type parameters ###
+  map_type:               costmap
+
+  # The following parameters are only used if map_type is set to "voxel":
+  #origin_z:              0.0
+  #z_resolution:          0.2
+  #z_voxels:              10
+  #unknown_threshold:     10
+  #mark_threshold:        0
+
+  # The following parameters are only used if map_type is set to "costmap":
+  track_unknown_space:    false
+  
+  
