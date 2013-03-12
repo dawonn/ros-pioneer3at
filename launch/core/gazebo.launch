@@ -1,10 +1,8 @@
 <launch>
 
-	<!-- Launch the demo world -->
+	<!-- Spawn a Pioneer3AT in the WG office building -->
 	<node pkg="pioneer3at" type="bashim" name="gazebo_server" 
-	      args="gzserver $(find pioneer3at)/config/gazebo/wg_world.sdf"
-	      output="screen"/>
-	
+	      args="gzserver $(find pioneer3at)/config/gazebo/wg_world.sdf"/>
 
 	<!-- run script to control the vitual pioneer -->
 	<node pkg="pioneer3at" type="gazebo_bridge" name="Pioneer3AT_Gazebo" >	
@@ -16,7 +14,7 @@
 	  <param name="gz_pose_topic"     type="str" value="~/pose/info" />
 	  <param name="gz_cmd_vel_topic"  type="str" value="~/Pioneer3AT/vel_cmd" />
 	  
-		<remap from="/odom"    to="/Pioneer3AT/odom" />
-		<remap from="/cmd_vel" to="/Pioneer3AT/cmd_vel" />
+		<remap from="odom"    to="/Pioneer3AT/odom" />
+		<remap from="cmd_vel" to="/Pioneer3AT/cmd_vel" />
 	</node>	
 </launch>

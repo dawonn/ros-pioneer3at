@@ -1,31 +1,31 @@
 <launch>
 
-	<!-- 
-	Select the robot-driver you wish to use 
-	-->
-	<!-- <include file="$(find pioneer3at)/launch/core/p2os_driver.launch" /> -->
-	<!-- <include file="$(find pioneer3at)/launch/core/rosaria.launch" /> -->
-	<include file="$(find pioneer3at)/launch/core/gazebo.launch" />
+	  <!-- 
+	  Select the robot-driver you wish to use 
+	  -->
+	    <!-- <include file="$(find pioneer3at)/launch/core/p2os_driver.launch" /> -->
+	    <!-- <include file="$(find pioneer3at)/launch/core/rosaria.launch" /> -->
+	    <include file="$(find pioneer3at)/launch/core/gazebo.launch" />
+	
+	  <!-- 
+	  Select the laser you wish to use 
+	  -->
+	    <!-- <include file="$(find pioneer3at)/launch/lidar/sicklms.launch" /> --> 
+	    <!-- <include file="$(find pioneer3at)/launch/lidar/hokuyo.launch" /> -->
+	    <include file="$(find pioneer3at)/launch/lidar/gazebo_hokuyo.launch" /> 
+	
+	  <!-- 
+	  Select the control method you wish to use 
+	  -->
+	    <include file="$(find pioneer3at)/launch/control/rqt_robot_steering.launch" />
+	    <!-- <include file="$(find pioneer3at)/launch/control/ps3joy.launch" /> -->
+	    <!-- <include file="$(find pioneer3at)/launch/control/xboxjoy.launch" /> -->
 	
 	
-	<!-- 
-	Select the laser you wish to use 
-	-->
-	<!-- <include file="$(find pioneer3at)/launch/lidar/sicklms.launch" /> --> 
-	<!-- <include file="$(find pioneer3at)/launch/lidar/hokuyo.launch" /> -->
-	<include file="$(find pioneer3at)/launch/lidar/gazebo_hokuyo.launch" /> 
-	
-	
-	<!-- 
-	Select the control method you wish to use 
-	-->
-	<include file="$(find pioneer3at)/launch/control/rqt_robot_steering.launch" />
-	<!-- <include file="$(find pioneer3at)/launch/control/ps3joy.launch" /> -->
-	<!-- <include file="$(find pioneer3at)/launch/control/xboxjoy.launch" /> -->
-	
-	
-	<include file="$(find pioneer3at)/launch/core/urdf.launch" />
-	
+		<!-- Other essential launch files -->
+	  <include file="$(find pioneer3at)/launch/core/urdf.launch" />
+	  <include file="$(find pioneer3at)/launch/control/mux_cmdvel.launch" />
+	 
 </launch>
 
 

@@ -1,0 +1,7 @@
+<launch>
+	<!-- run ROSAria to control the pioneer -->
+	<node pkg="rosaria" type="rosaria" name="rosaria" />
+	  <remap from="cmd_vel" to="Pioneer3AT/cmd_vel" />
+	</node>
+	
+</launch>

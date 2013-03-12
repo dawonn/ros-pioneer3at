@@ -75,6 +75,9 @@ int main( int argc, char* argv[] )
   n_.getParam("ros_laserscan_frame", ros_laserscan_frame);
   ros_laserscan_pub = n.advertise<sensor_msgs::LaserScan>("scan", 100);
     
+  // When launched from a launch file we need to give Gazebo time to load
+  ros::Duration(5.0).sleep();
+    
   // Initialize Gazebo
   gazebo::transport::init();
   gazebo::transport::NodePtr gz_node(new gazebo::transport::Node());

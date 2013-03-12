@@ -1,0 +1,17 @@
+<launch>
+
+  <!-- This node allows for multiple controllers of the robot -->
+
+	<node pkg="topic_tools" type="mux" name="Pioneer3AT_mux_cmdvel" 
+	      args="/Pioneer3AT/cmd_vel /Pioneer3AT/teleop/cmd_vel /Pioneer3AT/move_base/cmd_vel">
+	      
+	  <remap from="mux" to="Pioneer3AT_mux_cmdvel" />
+	</node>
+
+  <!-- switch topics with:
+      rosrun topic_tools mux_select Pioneer3AT_mux_cmdvel /Pioneer3AT/teleop/cmd_vel
+  (or) 
+      rosrun topic_tools mux_select Pioneer3AT_mux_cmdvel /Pioneer3AT/move_base/cmd_vel
+  -->	
+	
+</launch>

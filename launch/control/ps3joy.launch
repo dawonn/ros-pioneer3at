@@ -1,9 +1,16 @@
 <launch>
+
+  <!-- PS3joy patch for automagic sudo: http://goo.gl/qGwLO -->
 	<node pkg="ps3joy" type="ps3joy.py" name="ps3joy" launch-prefix="xterm -e"/>
+	
 	<node pkg="joy" type="joy_node" name="joy_node" />
 	
-	<node pkg="pioneer3at" type="teleop_joy" name="teleop_joy_ps3" >
-	
+	<node pkg="pioneer3at" type="teleop_joy" name="Pioneer3AT_ps3_teleop" >
+	  <remap from="cmd_vel" to="/Pioneer3AT/teleop/cmd_vel" />
+	  
+	  <param name="linear_axis"    type="int"     value="1" />
+	  <param name="linear_scale"   type="int"     value="2" />
+	  <param name="rotation_axis"  type="double"  value="0.8" />
+	  <param name="rotation_scale" type="double"  value="1.5" />
 	</node>
-	
 </launch>

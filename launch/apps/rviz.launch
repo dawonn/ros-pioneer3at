@@ -1,0 +1,5 @@
+<launch>
+	<node pkg="rviz" type="rviz" name="Pioneer3AT_rviz" 
+	      args="-d $(find pioneer3at)/config/rviz/settings.rviz"/>
+
+</launch>

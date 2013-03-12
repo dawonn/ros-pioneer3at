@@ -1,0 +1,16 @@
+<launch>
+
+    <!-- Configure this launch file for your hardware setup  -->
+	  <include file="$(find pioneer3at)/launch/hardware.launch" />
+	
+	  <!-- Launch Applications  -->
+	  <include file="$(find pioneer3at)/launch/apps/gmapping.launch" />
+	  <include file="$(find pioneer3at)/launch/apps/navigation.launch" />
+	  
+	  <!-- Launch Visualization  -->
+	  <include file="$(find pioneer3at)/launch/apps/rviz.launch" />
+	
+</launch>
+
+
+

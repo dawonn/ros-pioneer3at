@@ -1,13 +1,13 @@
 <launch>
-	<node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
+	<node pkg="move_base" type="move_base" name="Pioneer3AT_move_base" ns="Pioneer3AT">
 		<rosparam file="$(find pioneer3at)/config/move_base/move_base.yaml" command="load"/>
 		<rosparam file="$(find pioneer3at)/config/move_base/costmap_common.yaml" command="load" ns="global_costmap" />
 		<rosparam file="$(find pioneer3at)/config/move_base/costmap_common.yaml" command="load" ns="local_costmap" />
 		<rosparam file="$(find pioneer3at)/config/move_base/costmap_global.yaml" command="load"  />
 		<rosparam file="$(find pioneer3at)/config/move_base/costmap_local.yaml" command="load"/>
 		
-		<remap from="/cmd_vel" to="/move_base/cmd_vel" />
-		<remap from="/odom"    to="/Pioneer3AT/odom" />
+		<remap from="cmd_vel" to="move_base/cmd_vel" />
+		<remap from="odom"    to="Pioneer3AT/odom" />
 	</node>
 
 </launch>
