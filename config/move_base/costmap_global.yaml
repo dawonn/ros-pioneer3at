@@ -1,7 +1,7 @@
 global_costmap:
-  global_frame: /map
-  update_frequency:  5.0
-  publish_frequency: 5.0
+  global_frame:           /Pioneer3AT/map
+  update_frequency:       5.0
+  publish_frequency:      5.0
  
  ### Map management parameters ### 
   static_map:             true
@@ -9,7 +9,7 @@ global_costmap:
   unknown_cost_value:     0
   publish_voxel_map:      false
   lethal_cost_threshold:  100
-  map_topic:              /map
+  map_topic:              /Pioneer3AT/map
 
   # The following parameters are overwritten if "static_map" is set to true:
   #width:                 10

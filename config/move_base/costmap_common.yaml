@@ -3,7 +3,7 @@
 
 
 ### Coordinate frame and tf parameters ###
-global_frame: /map
+global_frame: /Pioneer3AT/map
 robot_base_frame: /Pioneer3AT/chassis
 transform_tolerance:        0.5 # 0.2
 

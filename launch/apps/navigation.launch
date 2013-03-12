@@ -1,13 +1,19 @@
 <launch>
-	<node pkg="move_base" type="move_base" name="Pioneer3AT_move_base" ns="Pioneer3AT">
+	<node pkg="move_base" type="move_base" name="Pioneer3AT_move_base">
 		<rosparam file="$(find pioneer3at)/config/move_base/move_base.yaml" command="load"/>
 		<rosparam file="$(find pioneer3at)/config/move_base/costmap_common.yaml" command="load" ns="global_costmap" />
 		<rosparam file="$(find pioneer3at)/config/move_base/costmap_common.yaml" command="load" ns="local_costmap" />
 		<rosparam file="$(find pioneer3at)/config/move_base/costmap_global.yaml" command="load"  />
 		<rosparam file="$(find pioneer3at)/config/move_base/costmap_local.yaml" command="load"/>
 		
-		<remap from="cmd_vel" to="move_base/cmd_vel" />
-		<remap from="odom"    to="Pioneer3AT/odom" />
+		<remap from="cmd_vel"               to="/Pioneer3AT/move_base/cmd_vel"  />
+		<remap from="move_base/cancel"      to="/Pioneer3AT/move_base/cancel"   />
+		<remap from="move_base/feedback"    to="/Pioneer3AT/move_base/feedback" />
+		<remap from="move_base/goal"        to="/Pioneer3AT/move_base/goal" />
+		<remap from="move_base/result"      to="/Pioneer3AT/move_base/result" />
+		<remap from="move_base/status"      to="/Pioneer3AT/move_base/status" />
+		<remap from="move_base_simple/goal" to="/Pioneer3AT/move_base_simple/goal" />
+		
 	</node>
 
 </launch>

@@ -1,0 +1,6 @@
+#!/bin/bash
+#
+# Give control to the navigation planner (move_base)
+#  
+
+rosrun topic_tools mux_select Pioneer3AT_mux_cmdvel /Pioneer3AT/teleop/cmd_vel

@@ -1,0 +1,7 @@
+#!/bin/bash
+#
+# Give control to the operator (joystick, etc)
+#  
+
+rosrun topic_tools mux_select Pioneer3AT_mux_cmdvel /Pioneer3AT/move_base/cmd_vel
+

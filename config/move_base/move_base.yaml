@@ -59,35 +59,35 @@ TrajectoryPlannerROS:
   y_vels: [-0.3, -0.1, 0.1, 0.3]
   
 # Goal Tolerance Parameters
-  yaw_goal_tolerance:         0.30
-  xy_goal_tolerance:          0.30
-  latch_xy_goal_tolerance:    true
+  yaw_goal_tolerance:           0.30
+  xy_goal_tolerance:            0.30
+  latch_xy_goal_tolerance:      true
   
 # Forward Simulation Parameters
-  sim_time:                   5.0
-  sim_granularity:            0.05
-  angular_sim_granularity:    0.05
-  vx_samples:                 20
-  vtheta_samples:             20
-  #controller_frequency:       20 # set above
+  sim_time:                     5.0
+  sim_granularity:              0.05
+  angular_sim_granularity:      0.05
+  vx_samples:                   20
+  vtheta_samples:               20
+  #controller_frequency:        20 # set above
   
 # Trajectory Scoring Parameters
-  meter_scoring:              true
-  path_distance_bias:         1
-  goal_distance_bias:         1
-  occdist_scale:              0.01
-  heading_lookahead:          0.325
-  heading_scoring:            true
-  heading_scoring_timestep:   0.8
-  dwa:                        true
-  publish_cost_grid_pc:       false
-  global_frame_id:            /Pioneer3AT/odom
+  meter_scoring:                true
+  path_distance_bias:           1
+  goal_distance_bias:           1
+  occdist_scale:                0.01
+  heading_lookahead:            0.325
+  heading_scoring:              true
+  heading_scoring_timestep:     0.8
+  dwa:                          true
+  publish_cost_grid_pc:         false
+  global_frame_id:              /Pioneer3AT/odom
   
 # Oscillation Prevention Parameters
-  oscillation_reset_dist:     0.1
+  oscillation_reset_dist:       0.1
   
 # Global Plan Parameters
-  prune_plan:                 true
+  prune_plan:                   true
   
   
 ### Map management parameters ###

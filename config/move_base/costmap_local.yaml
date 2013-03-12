@@ -1,5 +1,5 @@
 local_costmap:
-  global_frame: /Pioneer3AT/odom
+  global_frame:           /Pioneer3AT/odom
   update_frequency:       1.0   # 10.0  
   publish_frequency:      1.0   # 2.0 
   
@@ -10,7 +10,7 @@ local_costmap:
   unknown_cost_value:     0
   publish_voxel_map:      false
   lethal_cost_threshold:  100
-  map_topic:              /map
+  map_topic:              /Pioneer3AT/map
 
   # The following parameters are overwritten if "static_map" is set to true:
   width:                  2.0     # 5.0
