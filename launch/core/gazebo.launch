@@ -1,4 +1,11 @@
 <launch>
+
+	<!-- Launch the demo world -->
+	<node pkg="pioneer3at" type="bashim" name="gazebo_server" 
+	      args="gzserver $(find pioneer3at)/config/gazebo/wg_world.sdf"
+	      output="screen"/>
+	
+
 	<!-- run script to control the vitual pioneer -->
 	<node pkg="pioneer3at" type="gazebo_bridge" name="Pioneer3AT_Gazebo" >	
 	  <param name="ros_odom_frame"          type="str"    value="/Pioneer3AT/odom" />
@@ -11,5 +18,5 @@
 	  
 		<remap from="/odom"    to="/Pioneer3AT/odom" />
 		<remap from="/cmd_vel" to="/Pioneer3AT/cmd_vel" />
-	</node>
+	</node>	
 </launch>

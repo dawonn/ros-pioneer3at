@@ -1,0 +1,9 @@
+#!/bin/bash
+# Shameless hack to let me launch gazebo easily.....
+# 
+# You must add the following to your ~/.bashrc file:
+#   source /usr/local/share/gazebo/setup.sh
+
+$1 $2
+
+

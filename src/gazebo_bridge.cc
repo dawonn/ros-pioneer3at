@@ -122,6 +122,8 @@ int main( int argc, char* argv[] )
   odom_broadcaster = new tf::TransformBroadcaster;
   ros_odom_pub_seq = 0;
     
+  // When launched from a launch file we need to give Gazebo time to load
+  ros::Duration(5.0).sleep();
   
   // Initialize Gazebo
   gazebo::transport::init();
