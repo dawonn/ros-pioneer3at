@@ -2,11 +2,11 @@
 
   <!-- This node allows for multiple controllers of the robot -->
 
-	<node pkg="pioneer3at" type="mux_cmdvel" name="Pioneer3AT_mux_cmdvel" >
+	<node pkg="pioneer3at" type="mux_cmdvel" name="Pioneer3AT_mux_cmdvel" output="screen">
 	      
-	  <remap from="teleop/cmd_vel"    to="/Pioneer3AT/teleop/cmd_vel" />
-	  <remap from="move_base/cmd_vel" to="/Pioneer3AT/move_base/cmd_vel" />
-	  <remap from="cmd_vel"           to="/Pioneer3AT/cmd_vel" />
+	  <remap from="/teleop/cmd_vel"    to="/Pioneer3AT/teleop/cmd_vel" />
+	  <remap from="/move_base/cmd_vel" to="/Pioneer3AT/move_base/cmd_vel" />
+	  <remap from="/cmd_vel"           to="/Pioneer3AT/cmd_vel" />
 	</node>
 
 	

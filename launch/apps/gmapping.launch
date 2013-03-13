@@ -1,5 +1,5 @@
 <launch>
-	<node pkg="gmapping" type="slam_gmapping" name="Pioneer3AT_gmapping">	
+	<node pkg="gmapping" type="slam_gmapping" name="Pioneer3AT_gmapping" output="screen">	
 	  <rosparam file="$(find pioneer3at)/config/gmapping/gmapping.yaml" command="load" />
 	  
 	  <remap from="scan"          to="/Pioneer3AT/laserscan"/>

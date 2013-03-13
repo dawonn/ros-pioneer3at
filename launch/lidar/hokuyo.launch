@@ -1,6 +1,6 @@
 <launch>
 	<node pkg="hokuyo_node" type="hokuyo_node" name="hokuyo_node" />
 	
-		<!-- publish static transform from the center of the robot to the laser rangefinder (required for slam_gmapping) -->
-	<node pkg="tf" type="static_transform_publisher" name="base_link_to_laser" args="0 0 0.1397 0 0 0 base_link laser 100" />
+	<!-- publish static transform from the center of the robot to the lms -->
+	<node pkg="tf" type="static_transform_publisher" name="base_link_to_laser" args="0.2 0 0.1397 0 0 0 /Pioneer3AT/base_link /Pioneer3AT/laserscan 100" />
 </launch>

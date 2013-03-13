@@ -12,5 +12,6 @@
 	  <param name="linear_scale"   type="int"     value="2" />
 	  <param name="rotation_axis"  type="double"  value="0.8" />
 	  <param name="rotation_scale" type="double"  value="1.5" />
-	</node>
+	</node>	
+
 </launch>

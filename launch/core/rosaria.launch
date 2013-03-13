@@ -1,7 +1,13 @@
 <launch>
 	<!-- run ROSAria to control the pioneer -->
-	<node pkg="rosaria" type="rosaria" name="rosaria" />
-	  <remap from="cmd_vel" to="Pioneer3AT/cmd_vel" />
+	<node pkg="rosaria" type="rosaria" name="Pioneer3AT_rosaria">
+	  <param name="~tf_prefix" type="str" value="Pioneer3AT"  />
+	  <param name="port"       type="str" value="/dev/ttyUSB0"/>
+
+    <remap from="~pose"         to="/Pioneer3AT/pose" />
+    <remap from="~sonar"        to="/Pioneer3AT/sonar" />
+    <remap from="~cmd_vel"      to="/Pioneer3AT/cmd_vel" />
+    <remap from="~bumper_state" to="/Pioneer3AT/bumper_state" />
 	</node>
 	
 </launch>

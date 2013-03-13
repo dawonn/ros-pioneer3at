@@ -4,7 +4,7 @@
 
   
 throttle_scans:       1
-base_frame:           /Pioneer3AT/chassis
+base_frame:           /Pioneer3AT/base_link
 map_frame:            /Pioneer3AT/map
 odom_frame:           /Pioneer3AT/odom
 map_update_interval:  0.5 

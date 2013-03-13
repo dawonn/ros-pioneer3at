@@ -9,54 +9,61 @@ import rospy
 
 from geometry_msgs.msg import Twist
 
-global previous_teleop_msg
-global previous_teleop_msg_time
-
-global previous_nav_msg
-global previous_nav_msg_time
-
-
+    
 def teleop_cmdCB(msg):
-    rospy.logdebug("Teleop Command Recieved: [Vx:%f, Wz:%f]"%(msg.linear.x, msg.angular.z))
+    global previous_teleop_msg
+    global previous_teleop_msg_time
+
     previous_teleop_msg = msg 
-    previous_teleop_msg_time = rospy.Time.now()   
+    previous_teleop_msg_time = rospy.get_time()   
     
     
-def nav_cmdCB(msg):  
-    rospy.logdebug("Navigation Command Recieved: [Vx:%f, Wz:%f]"%(msg.linear.x, msg.angular.z))
+def nav_cmdCB(msg):
+    global previous_nav_msg
+    global previous_nav_msg_time
+
     previous_nav_msg = msg 
-    previous_nav_msg_time = rospy.Time.now()
+    previous_nav_msg_time = rospy.get_time()
     
     
 if __name__ == '__main__':
+    global previous_teleop_msg
+    global previous_teleop_msg_time
+    global previous_nav_msg
+    global previous_nav_msg_time
+
+    previous_teleop_msg       = Twist()
+    previous_teleop_msg_time  = 0.0
+    previous_nav_msg          = Twist()
+    previous_nav_msg_time     = 0.0
+
     rospy.init_node('cmd_vel_mux')
     
-    previous_teleop_msg_time  = rospy.Time.from_sec(0)
-    previous_nav_msg_time     = rospy.Time.from_sec(0)
-
-    max_msg_latency           = rospy.Duration.from_sec(0.5)
-    msg_deadband              = 0.001
+    max_msg_latency           = 0.5    # Seconds
+    msg_deadband              = 0.001  # m/s
         
-    rospy.Subscriber("teleop/cmd_vel"   , Twist, teleop_cmdCB)
-    rospy.Subscriber("move_base/cmd_vel", Twist, nav_cmdCB)
+    rospy.Subscriber("/teleop/cmd_vel"   , Twist, teleop_cmdCB)       
+    rospy.Subscriber("/move_base/cmd_vel", Twist, nav_cmdCB)
     
-    cmd_vel_pub = rospy.Publisher("cmd_vel", Twist)
+    cmd_vel_pub = rospy.Publisher("/cmd_vel", Twist)
+
     
     r = rospy.Rate(10) # Hz
     while not rospy.is_shutdown():
         r.sleep()
         
         # Clear any stale messages
-        if (rospy.Time.now() - previous_teleop_msg_time > max_msg_latency):
-          previous_teleop_msg = Twist()
+        msg_delay = rospy.get_time() - previous_teleop_msg_time
+        if (msg_delay > max_msg_latency):
+            previous_teleop_msg = Twist()
           
-        if (rospy.Time.now() - previous_nav_msg_time > max_msg_latency):
-          previous_nav_msg = Twist()
+        if (rospy.get_time() - previous_nav_msg_time > max_msg_latency):
+            previous_nav_msg = Twist()
         
         # Override the navigation commands with the teleop commands
         msg = previous_nav_msg
-        if (previous_teleop_msg.linear.x      > msg_deadband 
-        or  previous_teleop_msg.msg.angular.z > msg_deadband):
+        if (abs(previous_teleop_msg.linear.x)  > msg_deadband 
+        or  abs(previous_teleop_msg.angular.z) > msg_deadband):
           msg = previous_teleop_msg
         
         # Publish the selected message

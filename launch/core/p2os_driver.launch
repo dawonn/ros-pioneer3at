@@ -1,13 +1,11 @@
 <launch>
 	<!-- run p2os to control the pioneer -->
-	<node pkg="p2os_driver" type="p2os_driver" name="p2os_driver" >
+	<node pkg="p2os_driver" type="p2os_driver" name="Pioneer3AT_p2os" ns="Pioneer3AT">
 		<rosparam file="$(find pioneer3at)/config/p2os/p2os_driver.yaml" command="load" />
-		
-		<remap from="cmd_vel" to="Pioneer3AT/cmd_vel" />
-		<remap from="odom"    to="Pioneer3AT/odom" />
+		<param name="tf_prefix" type="str" value="/Pioneer3AT"/>
 	</node>
 	
 	<!-- The old 'dashboard' for enabling the robot no longer works, this is a hack until a new one can be made.... -->
-	<node pkg="rostopic" type="rostopic" name="rbt_enable" args="pub cmd_motor_state p2os_driver/MotorState  1"/>
+	<node pkg="rostopic" type="rostopic" name="Pioneer3AT_p2os_enable" args="pub /Pioneer3AT/cmd_motor_state p2os_driver/MotorState  1"/>
 	
 </launch>

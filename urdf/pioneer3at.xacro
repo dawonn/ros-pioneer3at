@@ -9,7 +9,7 @@
 name="pioneer3at">
 
 <!-- Chassis -->
-	<link name="chassis">
+	<link name="base_link">
 		<visual>
 			<origin xyz="0 0 0.177" rpy="0 0 0"/>
 			<geometry>
@@ -36,7 +36,7 @@ name="pioneer3at">
 
 	<joint name="base_top_joint" type="fixed">
 		<origin xyz="0.003 0 0.274" rpy="0 0 0"/>
-		<parent link="chassis"/>
+		<parent link="base_link"/>
 		<child link="top_plate"/>
 	</joint>
 	
@@ -56,7 +56,7 @@ name="pioneer3at">
 
 	  <joint name="${prefix}_axle_joint" type="continuous">
 		  <origin xyz="${rx*0.135} ${ry*0.156} 0.111" rpy="0 0 0"/>
-		  <parent link="chassis"/>
+		  <parent link="base_link"/>
 		  <child link="${prefix}_axle"/>
 		  <axis xyz="0 1 0" />
 	  </joint>
@@ -119,7 +119,7 @@ name="pioneer3at">
 
 	<joint name="front_sonar_joint" type="fixed">
 		<origin xyz="0.193 0 0.25" rpy="0 0 0"/>
-		<parent link="chassis"/>
+		<parent link="base_link"/>
 		<child link="front_sonar"/>
 	</joint>
 
@@ -137,7 +137,7 @@ name="pioneer3at">
 
 	<joint name="rear_sonar_joint" type="fixed">
 		<origin xyz="-0.187 0 0.247" rpy="0 0 0"/>
-		<parent link="chassis"/>
+		<parent link="base_link"/>
 		<child link="rear_sonar"/>
 	</joint>
 	
@@ -156,7 +156,7 @@ name="pioneer3at">
 
 	  <joint name="Sonar_${id}_joint" type="fixed">
 		  <origin xyz="${px} ${py} 0.25" rpy="0 0 ${rz}"/>
-		  <parent link="chassis"/>
+		  <parent link="base_link"/>
 		  <child link="Sonar_${id}"/>
 	  </joint>
   </xacro:macro>
