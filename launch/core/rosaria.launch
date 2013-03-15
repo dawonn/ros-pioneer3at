@@ -1,6 +1,6 @@
 <launch>
 	<!-- run ROSAria to control the pioneer -->
-	<node pkg="rosaria" type="rosaria" name="Pioneer3AT_rosaria">
+	<node pkg="ROSARIA" type="RosAria" name="Pioneer3AT_rosaria">
 	  <param name="~tf_prefix" type="str" value="Pioneer3AT"  />
 	  <param name="port"       type="str" value="/dev/ttyUSB0"/>
 
