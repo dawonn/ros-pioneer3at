@@ -8,7 +8,7 @@
 	  <!-- <include file="$(find pioneer3at)/launch/apps/navigation.launch" /> -->
 	  
 	  <!-- Launch Visualization  -->
-	  <include file="$(find pioneer3at)/launch/apps/rviz.launch" />
+	  <include file="$(find pioneer3at)/launch/ui.launch" />
 	
 </launch>
 
