@@ -11,8 +11,8 @@
 <!-- <include file="$(find pioneer3at)/launch/lidar/hokuyo.launch" /> -->
 
 <!-- Other essential launch files -->
-<!-- <include file="$(find pioneer3at)/launch/core/urdf.launch" /> -->
-<!-- <include file="$(find pioneer3at)/launch/control/mux_cmdvel.launch" /> -->
+<include file="$(find pioneer3at)/launch/core/urdf.launch" />
+<include file="$(find pioneer3at)/launch/control/mux_cmdvel.launch" />
 	 
 </launch>
 
