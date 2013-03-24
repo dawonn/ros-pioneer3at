@@ -10,9 +10,9 @@ import rospy
 import std_srvs.srv
 
 try:
-  rospy.wait_for_service('/global_localization')
+  rospy.wait_for_service('global_localization')
   time.sleep(5.0)
-  global_localization = rospy.ServiceProxy('/global_localization', std_srvs.srv.Empty)
+  global_localization = rospy.ServiceProxy('global_localization', std_srvs.srv.Empty)
   resp1 = global_localization()
 except rospy.ServiceException, e:
   rospy.logerr("Service could not process request: %s"%str(e))

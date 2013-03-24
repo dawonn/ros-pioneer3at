@@ -5,7 +5,7 @@
 
   <!-- Launch Applications  -->
   <include file="$(find pioneer3at)/launch/apps/amcl.launch" />
-  <!-- <include file="$(find pioneer3at)/launch/apps/navigation.launch" /> -->
+  <include file="$(find pioneer3at)/launch/apps/navigation.launch" />
 
   <!-- Launch Visualization  -->
   <include file="$(find pioneer3at)/launch/ui.launch" />
