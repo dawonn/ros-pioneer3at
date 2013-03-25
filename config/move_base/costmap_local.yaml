@@ -1,7 +1,7 @@
 local_costmap:
   global_frame:           /Pioneer3AT/odom
-  update_frequency:       1.0   # 10.0  
-  publish_frequency:      1.0   # 2.0 
+  update_frequency:       20.0   # 10.0  
+  publish_frequency:      5.0   # 2.0 
   
   
  ### Map management parameters ### 
@@ -15,7 +15,7 @@ local_costmap:
   # The following parameters are overwritten if "static_map" is set to true:
   width:                  3.0     # 5.0
   height:                 3.0     # 5.0
-  resolution:             0.02     # 0.1
+  resolution:             0.02    # 0.1
   origin_x:               0.0
   origin_y:               0.0
 

@@ -1,7 +1,7 @@
 global_costmap:
   global_frame:           /Pioneer3AT/map
-  update_frequency:       5.0
-  publish_frequency:      5.0
+  update_frequency:       0.5
+  publish_frequency:      0.5
  
  ### Map management parameters ### 
   static_map:             true
@@ -21,6 +21,9 @@ global_costmap:
   ### Map type parameters ###
   map_type:               costmap
 
+  # The following parameters are only used if map_type is set to "costmap":
+  track_unknown_space:    false
+  
   # The following parameters are only used if map_type is set to "voxel":
   #origin_z:              0.0
   #z_resolution:          0.2
@@ -28,7 +31,4 @@ global_costmap:
   #unknown_threshold:     10
   #mark_threshold:        0
 
-  # The following parameters are only used if map_type is set to "costmap":
-  track_unknown_space:    false
-  
   
