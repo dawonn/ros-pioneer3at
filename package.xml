@@ -6,12 +6,11 @@
   <maintainer email="dereck@gmail.com">Dereck Wonnacott</maintainer>
   <license>BSD</license>
 
-  <url type="website">http://ros.org/wiki/p2os</url>
+  <url type="website">http://ros.org/wiki/</url>
   <url type="repository">https://github.com/dawonn/ros-Pioneer3AT</url>
-  <url type="bugtracker">https://github.com/dawonn/p2os_driver/issues</url>
+  <url type="bugtracker">https://github.com/dawonn/ros-Pioneer3AT/issues</url>
 
   <author email="dereck@gmail.com">Dereck Wonnacott</author>
-  <author email="dfseifer@usc.edu">David Feil-Seifer</author>
 
   <buildtool_depend>catkin</buildtool_depend>
   
@@ -24,12 +23,16 @@
   <run_depend>sensor_msgs</run_depend>
   <run_depend>nav_msgs</run_depend>
   <run_depend>tf</run_depend>
-  
-  <run_depend>p2os_driver</run_depend>
-  <run_depend>p2os_telop</run_depend>
-  <run_depend>laser_drivers</run_depend>
-  <run_depend>tf</run_depend>
   <run_depend>joy</run_depend>
+  
+  <!-- Strictly speaking, only one is required... -->
+  <!-- <run_depend>ROSARIA</run_depend> no rosdep rule exists (yet) -->
+  <!-- <run_depend>p2os</run_depend> no rosdep rule exists (yet) -->
+ 
+  <!-- Strictly speaking, only one is required... -->
+  <run_depend>sicktoolbox</run_depend>
+  <run_depend>urg_node</run_depend>
+  
   <run_depend>amcl</run_depend>
   <run_depend>gmapping</run_depend>
   <run_depend>move_base</run_depend>
