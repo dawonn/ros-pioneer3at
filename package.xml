@@ -30,7 +30,7 @@
   <!-- <run_depend>p2os</run_depend> no rosdep rule exists (yet) -->
  
   <!-- Strictly speaking, only one is required... -->
-  <run_depend>sicktoolbox</run_depend>
+  <run_depend>sicktoolbox_wrapper</run_depend>
   <run_depend>urg_node</run_depend>
   
   <run_depend>amcl</run_depend>
