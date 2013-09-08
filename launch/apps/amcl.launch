@@ -3,7 +3,7 @@
   <group  ns="Pioneer3AT">
 	  <!-- http://www.ros.org/wiki/map_server -->
 	  <!-- Use demo_navigation_gmapping.launch to make a map and save it to disk -->
-	  <node name="map_server" pkg="map_server" type="map_server" args="$(env HOME)/maps/map.yaml">  
+	  <node name="map_server" pkg="map_server" type="map_server" args="$(env HOME)/ros/maps/map.yaml">  
   	  <param name="frame_id" type="str" value="/Pioneer3AT/map"  />
 	  </node>
 

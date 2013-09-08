@@ -4,8 +4,9 @@
 #  
 
 import rospy
-from geometry_msgs.msg import Twist
-from sensor_msgs.msg   import Joy
+from geometry_msgs.msg  import Twist
+from sensor_msgs.msg    import Joy
+from actionlib_msgs.msg import GoalID
 
 def joyCB(msg):
   rospy.logdebug("Joy Recieved: [Vx:%f, Wz:%f]"%(msg.axes[linear_axis], 
@@ -15,6 +16,14 @@ def joyCB(msg):
   cmd_vel_msg.linear.x  = msg.axes[linear_axis]   * linear_scale  
   cmd_vel_msg.angular.z = msg.axes[rotation_axis] * rotation_scale
   cmd_vel_pub.publish(cmd_vel_msg)
+  
+  # PS3 Triangle Button (12) - abort navigation command
+  if msg.buttons[12]:
+    nav_abort_pub = rospy.Publisher("/Pioneer3AT/move_base/cancel", GoalID)
+    abort_msg = GoalID()
+    #abort_msg.stamp = rospy.Time.now()
+    #abort_msg.id = ""
+    nav_abort_pub.publish(abort_msg)
 
 
 if __name__ == '__main__':

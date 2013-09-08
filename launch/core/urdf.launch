@@ -1,6 +1,6 @@
 <launch>
 
-	<param name="Pioneer3AT/urdf" command="$(find xacro)/xacro.py $(find pioneer3at)/urdf/pioneer3at.xacro" />
+  <param name="Pioneer3AT/urdf" command="$(find xacro)/xacro.py $(find pioneer3at)/urdf/pioneer3at.xacro" />
    
   <node pkg="robot_state_publisher" type="state_publisher" name="Pioneer3AT_tf_broadcaster"> 
     <param name="tf_prefix" type="string" value="Pioneer3AT"/>
@@ -10,10 +10,10 @@
     <remap from="joint_states" to="Pioneer3AT/joint_states"/>
   </node>
   
-	<node pkg="pioneer3at" type="joint_state_publisher" name="Pioneer3AT_joints_publisher">
-	  <param name="tf_future_date" type="double" value="0.05" />
-	  
-    <remap from="joint_states" to="Pioneer3AT/joint_states"/>
+  <node pkg="pioneer3at" type="joint_state_publisher" name="Pioneer3AT_joints_publisher">
+    <param name="tf_future_date" type="double" value="0.05" />
+    
+   <remap from="joint_states" to="Pioneer3AT/joint_states"/>
   </node>
-	
+  
 </launch>

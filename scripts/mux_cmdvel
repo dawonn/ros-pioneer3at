@@ -2,7 +2,7 @@
 #
 # Pioneer3AT cmd_vel smart-mux
 #  
-#   Copyright Dereck Wonnacott [2013]
+#   Copyright Dereck Wonnacott <dereck@gmail.com> [2013]
 #
 
 import rospy

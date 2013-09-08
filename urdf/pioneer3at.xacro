@@ -6,10 +6,10 @@
        xmlns:controller="http://playerstage.sourceforge.net/gazebo/xmlschema/#controller"
        xmlns:interface="http://playerstage.sourceforge.net/gazebo/xmlschema/#interface"
        xmlns:xacro="http://ros.org/wiki/xacro"
-name="pioneer3at">
+       name="pioneer3at">
 
 <!-- Chassis -->
-	<link name="base_link">
+	<link name="Pioneer3AT/base_link">
 		<visual>
 			<origin xyz="0 0 0.177" rpy="0 0 0"/>
 			<geometry>
@@ -36,7 +36,7 @@ name="pioneer3at">
 
 	<joint name="base_top_joint" type="fixed">
 		<origin xyz="0.003 0 0.274" rpy="0 0 0"/>
-		<parent link="base_link"/>
+		<parent link="Pioneer3AT/base_link"/>
 		<child link="top_plate"/>
 	</joint>
 	
@@ -56,7 +56,7 @@ name="pioneer3at">
 
 	  <joint name="${prefix}_axle_joint" type="continuous">
 		  <origin xyz="${rx*0.135} ${ry*0.156} 0.111" rpy="0 0 0"/>
-		  <parent link="base_link"/>
+		  <parent link="Pioneer3AT/base_link"/>
 		  <child link="${prefix}_axle"/>
 		  <axis xyz="0 1 0" />
 	  </joint>
@@ -119,7 +119,7 @@ name="pioneer3at">
 
 	<joint name="front_sonar_joint" type="fixed">
 		<origin xyz="0.193 0 0.25" rpy="0 0 0"/>
-		<parent link="base_link"/>
+		<parent link="Pioneer3AT/base_link"/>
 		<child link="front_sonar"/>
 	</joint>
 
@@ -137,7 +137,7 @@ name="pioneer3at">
 
 	<joint name="rear_sonar_joint" type="fixed">
 		<origin xyz="-0.187 0 0.247" rpy="0 0 0"/>
-		<parent link="base_link"/>
+		<parent link="Pioneer3AT/base_link"/>
 		<child link="rear_sonar"/>
 	</joint>
 	
@@ -156,12 +156,13 @@ name="pioneer3at">
 
 	  <joint name="Sonar_${id}_joint" type="fixed">
 		  <origin xyz="${px} ${py} 0.25" rpy="0 0 ${rz}"/>
-		  <parent link="base_link"/>
+		  <parent link="Pioneer3AT/base_link"/>
 		  <child link="Sonar_${id}"/>
 	  </joint>
   </xacro:macro>
   
 <!-- Sonar offsets came from p2os_driver robot_params.cc -->
+<!-- Not used, a lot of TF clutter
   <xacro:Sonar id="1"  px="0.145"  py="0.13"   rz="1.5705"/>
   <xacro:Sonar id="2"  px="0.185"  py="0.115"  rz="0.8725"/>
   <xacro:Sonar id="3"  px="0.22"   py="0.08"   rz="0.5235"/>
@@ -178,6 +179,7 @@ name="pioneer3at">
   <xacro:Sonar id="14" px="-0.22"  py="0.08"   rz="2.6175"/>
   <xacro:Sonar id="15" px="-0.185" py="0.115"  rz="2.2685"/>
   <xacro:Sonar id="16" px="-0.145" py="0.13"   rz="1.5705"/>
+-->
 
 </robot>
 

@@ -1,13 +1,13 @@
 <launch>
 
 <!-- Select the robot-driver you wish to use -->
-<include file="$(find pioneer3at)/launch/core/gazebo.launch" />
-<!-- <include file="$(find pioneer3at)/launch/core/rosaria.launch" /> -->
+<!-- <include file="$(find pioneer3at)/launch/core/gazebo.launch" /> -->
+<include file="$(find pioneer3at)/launch/core/rosaria.launch" />
 <!-- <include file="$(find pioneer3at)/launch/core/p2os_driver.launch" /> -->
 
 <!-- Select the laser you wish to use -->
-<include file="$(find pioneer3at)/launch/lidar/gazebo_hokuyo.launch" />
-<!-- <include file="$(find pioneer3at)/launch/lidar/sicklms.launch" /> -->
+<!-- <include file="$(find pioneer3at)/launch/lidar/gazebo_hokuyo.launch" /> -->
+<include file="$(find pioneer3at)/launch/lidar/sicklms.launch" />
 <!-- <include file="$(find pioneer3at)/launch/lidar/hokuyo.launch" /> -->
 
 <!-- Other essential launch files -->

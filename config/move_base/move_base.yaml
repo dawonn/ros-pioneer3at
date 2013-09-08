@@ -16,7 +16,7 @@ recovery_behaviors: [{
     type: rotate_recovery/RotateRecovery
   }]
   
-planner_frequency:          0.5
+planner_frequency:          0     # Global plan updates on new goal or path blocked only
 controller_frequency:       20
 planner_patience:           5.0
 controller_patience:        3.0

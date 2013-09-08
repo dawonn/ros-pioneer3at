@@ -23,7 +23,9 @@
   <run_depend>sensor_msgs</run_depend>
   <run_depend>nav_msgs</run_depend>
   <run_depend>tf</run_depend>
+  <run_depend>robot_state_publisher</run_depend>
   <run_depend>joy</run_depend>
+  <run_depend>ps3joy</run_depend>
   
   <!-- Strictly speaking, only one is required... -->
   <!-- <run_depend>ROSARIA</run_depend> no rosdep rule exists (yet) -->

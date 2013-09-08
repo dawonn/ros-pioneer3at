@@ -1,7 +1,6 @@
 <launch>
 
-  <!-- PS3joy patch for automagic sudo: http://goo.gl/qGwLO -->
-	<node pkg="ps3joy" type="ps3joy.py" name="ps3joy" launch-prefix="xterm -e"/>
+	<!-- node pkg="ps3joy" type="ps3joy.py" name="ps3joy"/ -->
 	
 	<node pkg="joy" type="joy_node" name="joy_node" />
 	
