@@ -1,8 +1,7 @@
 <launch>
 	<!-- run ROSAria to control the pioneer -->
 	<node pkg="rosaria" type="RosAria" name="Pioneer3AT_rosaria">
-	  <param name="~tf_prefix" type="str" value="Pioneer3AT"  />
-	  <param name="port"       type="str" value="/dev/ttyUSB0"/>
+		<rosparam file="$(find pioneer3at)/config/rosaria/rosaria.yaml" command="load" />
 
     <remap from="~pose"         to="/Pioneer3AT/pose" />
     <remap from="~sonar"        to="/Pioneer3AT/sonar" />

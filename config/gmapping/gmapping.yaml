@@ -4,10 +4,10 @@
 
   
 throttle_scans:       1
-base_frame:           /Pioneer3AT/base_link
-map_frame:            /Pioneer3AT/map
-odom_frame:           /Pioneer3AT/odom
-map_update_interval:  2.0 
+base_frame:           Pioneer3AT/base_link
+map_frame:            Pioneer3AT/map
+odom_frame:           Pioneer3AT/odom
+map_update_interval:  5.0 
 
 # Unset maxUrange and maxRange and it will autodetect
 # maxUrange:          10.0
@@ -29,8 +29,8 @@ linearUpdate:         0.5
 angularUpdate:        0.5 
 temporalUpdate:       2.0    
 
-resampleThreshold:    0.5     
-particles:           30
+resampleThreshold:    0.5    
+particles:            30
 
 # Initial Map Size & Resolution
 xmin:                -2
@@ -44,11 +44,11 @@ llsamplestep:         0.01
 lasamplerange:        0.005  
 lasamplestep:         0.005
 
-transform_publish_period:  0.0333       
+transform_publish_period:  0.05       
 occ_thresh:           0.25
 # maxRange:           10.0
 
-tf_delay:             0.5
+tf_delay:             0.1
 
 
 

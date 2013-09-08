@@ -1,7 +1,7 @@
 local_costmap:
   global_frame:           /Pioneer3AT/odom
-  update_frequency:       20.0   # 10.0  
-  publish_frequency:      5.0   # 2.0 
+  update_frequency:       2.0   # 10.0  
+  publish_frequency:      2.0   # 2.0 
   
   
  ### Map management parameters ### 
