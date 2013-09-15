@@ -5,12 +5,15 @@
 	<node pkg="joy" type="joy_node" name="joy_node" />
 	
 	<node pkg="pioneer3at" type="teleop_joy" name="Pioneer3AT_ps3_teleop" >
-	  <remap from="cmd_vel" to="/Pioneer3AT/teleop/cmd_vel" />
+	  <remap from="cmd_vel" to="/Pioneer3AT/ps3joy/cmd_vel" />
 	  
-	  <param name="linear_axis"    type="int"     value="1" />
-	  <param name="linear_scale"   type="int"     value="2" />
-	  <param name="rotation_axis"  type="double"  value="0.8" />
-	  <param name="rotation_scale" type="double"  value="1.5" />
+	  <param name="linear_axis"      type="int"    value="1" />
+	  <param name="linear_scale"     type="double" value="0.8" />
+	  
+	  <param name="rotation_axis"    type="int"    value="0" />
+	  <param name="rotation_scale"   type="double" value="1.5" />
+	  
+	  <param name="abort_nav_button" type="int"    value="12" /> <!-- PS3 Triangle -->
 	</node>	
 
 </launch>

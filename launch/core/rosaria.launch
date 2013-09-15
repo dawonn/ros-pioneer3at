@@ -1,6 +1,6 @@
 <launch>
 	<!-- run ROSAria to control the pioneer -->
-	<node pkg="rosaria" type="RosAria" name="Pioneer3AT_rosaria">
+	<node pkg="rosaria" type="RosAria" name="Pioneer3AT_rosaria" output="screen">
 		<rosparam file="$(find pioneer3at)/config/rosaria/rosaria.yaml" command="load" />
 
     <remap from="~pose"         to="/Pioneer3AT/pose" />

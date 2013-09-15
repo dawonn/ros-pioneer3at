@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 #
 # Simple Joystick Control Node
+# Dereck Wonnacott (2013)
 #  
 
 import rospy
@@ -8,7 +9,16 @@ from geometry_msgs.msg  import Twist
 from sensor_msgs.msg    import Joy
 from actionlib_msgs.msg import GoalID
 
-def joyCB(msg):
+def joyCB(msg):  
+  global cmd_vel_pub
+  
+  global linear_axis
+  global linear_scale
+  global rotation_axis
+  global rotation_scale
+  
+  global abort_nav_button
+
   rospy.logdebug("Joy Recieved: [Vx:%f, Wz:%f]"%(msg.axes[linear_axis], 
                                                  msg.axes[rotation_axis]))
                                                  
@@ -18,7 +28,7 @@ def joyCB(msg):
   cmd_vel_pub.publish(cmd_vel_msg)
   
   # PS3 Triangle Button (12) - abort navigation command
-  if msg.buttons[12]:
+  if msg.buttons[abort_nav_button]:
     nav_abort_pub = rospy.Publisher("/Pioneer3AT/move_base/cancel", GoalID)
     abort_msg = GoalID()
     #abort_msg.stamp = rospy.Time.now()
@@ -30,15 +40,21 @@ if __name__ == '__main__':
   rospy.init_node('teleop_joy')
   
   global cmd_vel_pub
+  
   global linear_axis
   global linear_scale
   global rotation_axis
   global rotation_scale
   
+  global abort_nav_button
+  
   linear_axis    = rospy.get_param('linear_axis'   , 1)
   linear_scale   = rospy.get_param('linear_scale'  , 1.0)
+  
   rotation_axis  = rospy.get_param('rotation_axis' , 2)
   rotation_scale = rospy.get_param('rotation_scale', 1.5)
+  
+  abort_nav_button = rospy.get_param('abort_nav_button', 12)
   
   cmd_vel_pub = rospy.Publisher("cmd_vel", Twist)
   

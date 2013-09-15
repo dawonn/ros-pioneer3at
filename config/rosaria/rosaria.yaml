@@ -6,9 +6,10 @@ port:               /dev/ttyUSB0
 debug_aria:         false
 aria_log_filename:  Aria.log
 
-
 tf_prefix:          Pioneer3AT
 
-
+TicksMM:            141
+DriftFactor:        91
+RevCount:           32675
 
 

@@ -1,9 +1,8 @@
 <launch>
 
   <!-- Select the control method you wish to use	  -->
-  <!-- include file="$(find pioneer3at)/launch/control/rqt_robot_steering.launch" / -->
-  <include file="$(find pioneer3at)/launch/control/ps3joy.launch" />  
-  <!-- <include file="$(find pioneer3at)/launch/control/xboxjoy.launch" /> -->
+  <include file="$(find pioneer3at)/launch/control/rqt_robot_steering.launch" />
+  <include file="$(find pioneer3at)/launch/control/ps3joy.launch" />
 
   <!-- Launch Visualization  -->
   <include file="$(find pioneer3at)/launch/apps/rviz.launch" />
