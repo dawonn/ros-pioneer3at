@@ -3,10 +3,11 @@
 	<node pkg="rosaria" type="RosAria" name="Pioneer3AT_rosaria" output="screen">
 		<rosparam file="$(find pioneer3at)/config/rosaria/rosaria.yaml" command="load" />
 
-    <remap from="~pose"         to="/Pioneer3AT/pose" />
-    <remap from="~sonar"        to="/Pioneer3AT/sonar" />
-    <remap from="~cmd_vel"      to="/Pioneer3AT/cmd_vel" />
-    <remap from="~bumper_state" to="/Pioneer3AT/bumper_state" />
+    <remap from="~pose"            to="/Pioneer3AT/pose" />
+    <remap from="~sonar"           to="/Pioneer3AT/sonar" />
+    <remap from="~cmd_vel"         to="/Pioneer3AT/cmd_vel" />
+    <remap from="~bumper_state"    to="/Pioneer3AT/bumper_state" />
+    <remap from="~battery_voltage" to="/Pioneer3AT/battery_voltage" />
 	</node>
 	
 </launch>
