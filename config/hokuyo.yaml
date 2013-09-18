@@ -1,0 +1,16 @@
+
+
+ip_address:         192.168.0.10  # comment out this line to use serial port
+ip_port:            10940
+
+serial_port:        /dev/ttyACM0
+serial_baud:        115200
+
+calibrate_time:     false
+pubish_intensity:   true
+publish_multiecho:  true
+error_limit:        4
+
+
+# frame_id is only set via dimanic reconfigure?
+frame_id:           hokuyo
