@@ -6,14 +6,18 @@
              3D pointcloud of the enviornment.
              
              To use this for mapping, you will need ot change the static
-             transform below to the location of your  -->
+             transform below to match your mounting postition and change
+             /Hokuyo/most_intense to /Pioneer3AT/laserscan  -->
 
 
-	<node pkg="urg_node" type="urg_node" name="hokuyo_node" >
+	<node pkg="urg_node" type="urg_node" name="Hokuyo" >
 
 	  <rosparam file="$(find pioneer3at)/config/hokuyo.yaml" command="load" />
-		<remap from="/scan" to="/Pioneer3AT/laserscan" />
-		
+	  
+		<remap from="/echoes"       to="~echoes" />
+		<remap from="/first"        to="~first" />
+		<remap from="/last"         to="~last" />
+		<remap from="/most_intense" to="~most_intense" />
 	</node>
 	
 	<!-- publish static transform from the center of the robot to the lms -->

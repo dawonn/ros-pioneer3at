@@ -1,0 +1,10 @@
+
+# http://wiki.ros.org/laser_filters#scan_tros_cloud_filter_chain
+
+
+target_frame:     hokuyo
+#filter_window:    2
+#laser_max_range:  30.0
+#scan_topic:       scan
+#cloud_topic:      cloud_filtered
+#use_hack:         true

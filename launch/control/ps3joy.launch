@@ -1,8 +1,10 @@
 <launch>
 
-	<!-- node pkg="ps3joy" type="ps3joy.py" name="ps3joy"/ -->
+	<!-- node pkg="ps3joy" type="ps3joy.py" name="ps3joy" args="- -continious-output"/ -->
 	
-	<node pkg="joy" type="joy_node" name="joy_node" />
+	<node pkg="joy" type="joy_node" name="ps3_joy_node" >
+		<rosparam file="$(find pioneer3at)/config/ps3_joy_node.yaml" command="load" />
+	</node>
 	
 	<node pkg="pioneer3at" type="teleop_joy" name="Pioneer3AT_ps3_teleop" >
 	  <remap from="cmd_vel" to="/Pioneer3AT/ps3joy/cmd_vel" />

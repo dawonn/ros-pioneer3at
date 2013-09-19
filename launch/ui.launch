@@ -1,17 +1,21 @@
 <launch>
 
-  <!-- Select the control method you wish to use	  -->
-  <include file="$(find pioneer3at)/launch/control/rqt_robot_steering.launch" />
+  <!-- NOTE: Disabled on robot, configured for remote UI ~ DAW -->
+
+  <!-- Select the control method you wish to use	
+  <include file="$(find pioneer3at)/launch/control/rqt_robot_steering.launch" />  
+  -->
   <include file="$(find pioneer3at)/launch/control/ps3joy.launch" />
 
-  <!-- Launch Visualization  -->
+  
+  <!-- Launch Visualization
   <include file="$(find pioneer3at)/launch/apps/rviz.launch" />
   
 	<node pkg="rqt_reconfigure" type="rqt_reconfigure" name="Pioneer3AT_rqt_reconfigure" />
 	      
 	<node pkg="rqt_plot" type="rqt_plot" name="Pioneer3AT_rqt_plot" 
 	      args="/Pioneer3AT/cmd_vel/linear/x /Pioneer3AT/cmd_vel/angular/z"/>
- 
+   -->
 </launch>
 
 

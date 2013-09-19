@@ -13,16 +13,16 @@ subscribers:
   - name:        "RQT Robot Steering"
     topic:       "/Pioneer3AT/rqt/cmd_vel"
     timeout:     0.1
-    priority:    0
+    priority:    3
     
   - name:        "PS3 Controller"
     topic:       "/Pioneer3AT/ps3joy/cmd_vel"
     timeout:     0.1
-    priority:    2
+    priority:    1
     
   - name:        "MoveBase (ROS Navigation)"
     topic:       "/Pioneer3AT/move_base/cmd_vel"
     timeout:     0.1
-    priority:    1
+    priority:    2
     
-publisher:       "output/cmd_vel"
+publisher:       "/Pioneer3AT/cmd_vel"

@@ -1,16 +1,26 @@
 <launch>
-	<node pkg="octomap_ros" type="hector_mapping" name="Pioneer3AT_hector_mapping">	
-	  <rosparam file="$(find pioneer3at)/config/hector_mapping/hector_mapping.yaml" command="load" />
+  
+  <!-- convert laserscan to pointcloud -->
+	<node pkg="laser_filters" type="scan_to_cloud_filter_chain" name="laser2cloud">	
+	  <rosparam file="$(find pioneer3at)/config/laser2cloud.yaml" command="load" />
 	  
-	  <!-- Subscriber -->
-	  <remap from="scan"          to="/Pioneer3AT/laserscan"/>
-	  <remap from="syscommand"    to="/Pioneer3AT/hector_mapping/syscommand"/>
+	  <remap from="scan" to="/Hokuyo/first" />
+	  <remap from="/cloud_filtered" to="/Hokuyo/first/cloud" />
+	</node>  
+  
+  <!-- http://wiki.ros.org/octomap_server -->
+	<node pkg="octomap_server" type="octomap_server_node" name="octomap">	
+	  <rosparam file="$(find pioneer3at)/config/octomap.yaml" command="load" />
 	  
-	  <!-- Publisher -->
-	  <remap from="map_metadata"  to="/Pioneer3AT/map_metadata"/>
-	  <remap from="map"           to="/Pioneer3AT/map"/>
-	  <remap from="slam_out_pose" to="/Pioneer3AT/hector_mapping/slam_out_pose"/>
-	  <remap from="poseupdate"    to="/Pioneer3AT/hector_mapping/poseupdate"/>
-	  
+	  <remap from="cloud_in" to="/Hokuyo/first/cloud" />
+    
+    <remap from="octomap_binaray"             to="~octomap_binaray" />
+    <remap from="occupied_cells_vis_array"    to="~occupied_cells_vis_array" />
+    <remap from="octomap_point_cloud_centers" to="~octomap_point_cloud_centers" />
+    <remap from="octomap_collision_object"    to="~octomap_collision_object" />
+    <remap from="collision_map_out"           to="~collision_map_out" />
+    <remap from="projected_map"               to="~projected_map" />
+    
 	</node>
+	
 </launch>

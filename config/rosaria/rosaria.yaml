@@ -12,4 +12,4 @@ TicksMM:            141
 DriftFactor:        91
 RevCount:           32675
 
-
+cmd_vel_timeout:    2.0
