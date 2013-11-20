@@ -1,6 +1,6 @@
 <launch>
   <node pkg="nodelet" type="nodelet" name="nodelet_manager" args="manager"/>
-  <node pkg="nodelet" type="nodelet" name="cmd_vel_mux" args="load cmd_vel_mux/CmdVelMuxNodelet nodelet_manager">
+  <node pkg="nodelet" type="nodelet" name="cmd_vel_mux" args="load yocs_cmd_vel_mux/CmdVelMuxNodelet nodelet_manager">
 	  <remap from="/cmd_vel_mux/output/cmd_vel"           to="/Pioneer3AT/cmd_vel" />
 
     <param name="yaml_cfg_file" value="$(find pioneer3at)/config/cmd_vel_mux.yaml"/>
