@@ -55,7 +55,7 @@ void ros_cmd_vel_Callback(const geometry_msgs::Twist::ConstPtr& msg_in)
 }
 
 /////////////////////////////////////////////////
-void gz_odom_Callback(ConstPose_VPtr &msg_in)
+void gz_odom_Callback(ConstPosesStampedPtr &msg_in)
 { 
   //std::cout << "gz_odom" << msg_in->DebugString() << std::endl;
 
