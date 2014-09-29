@@ -23,7 +23,7 @@
 
 #include <gazebo/transport/transport.hh>
 #include <gazebo/msgs/msgs.hh>
-#include <math/gzmath.hh>
+#include <gazebo/math/gzmath.hh>
 
 #include <iostream>
 
@@ -31,6 +31,7 @@ gazebo::transport::PublisherPtr gz_vel_cmd_pub;
 ros::Publisher ros_odom_pub;
 tf::TransformBroadcaster *odom_broadcaster;
 int ros_odom_pub_seq;
+std::string ros_cmd_vel_frame;
 std::string ros_odom_frame;
 std::string ros_child_frame;
 std::string gz_model_name;
@@ -103,12 +104,13 @@ void gz_odom_Callback(ConstPosesStampedPtr &msg_in)
 /////////////////////////////////////////////////
 int main( int argc, char* argv[] )
 {
-  // Initialize ROS
+  // Initialize ROSros_odom_pub
   ros::init(argc, argv, "Gazebo_Bridge");
   ros::NodeHandle n;
   ros::NodeHandle n_("~");
   
   n_.param<std::string>("ros_odom_frame", ros_odom_frame,   "/odom");
+  n_.param<std::string>("ros_cmd_vel_frame", ros_cmd_vel_frame,   "/cmd_vel");
   n_.param<std::string>("ros_child_frame", ros_child_frame, "/base_link");
   n_.param<double>("ros_odom_tf_future_date", ros_odom_tf_future_date,  0.5);
   
@@ -118,7 +120,7 @@ int main( int argc, char* argv[] )
   std::string gz_cmd_vel_topic;
   n_.param<std::string>("gz_cmd_vel_topic", gz_cmd_vel_topic, "~/vel_cmd");
   
-  ros_odom_pub = n.advertise<nav_msgs::Odometry>("/odom", 100);
+  ros_odom_pub = n.advertise<nav_msgs::Odometry>(ros_odom_frame, 100);
   odom_broadcaster = new tf::TransformBroadcaster;
   ros_odom_pub_seq = 0;
     
@@ -134,7 +136,7 @@ int main( int argc, char* argv[] )
     
   // Subscribers
   gazebo::transport::SubscriberPtr gz_odom_sub = node->Subscribe(gz_pose_topic, gz_odom_Callback);
-  ros::Subscriber ros_cmd_vel_sub = n.subscribe("/cmd_vel", 1, ros_cmd_vel_Callback);
+  ros::Subscriber ros_cmd_vel_sub = n.subscribe(ros_cmd_vel_frame, 1, ros_cmd_vel_Callback);
   
   // Spin
   ros::spin();
@@ -142,7 +144,6 @@ int main( int argc, char* argv[] )
   // Shutdown
   gazebo::transport::fini();
 }
-
 
 
 
