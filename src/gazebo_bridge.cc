@@ -104,7 +104,7 @@ void gz_odom_Callback(ConstPosesStampedPtr &msg_in)
 /////////////////////////////////////////////////
 int main( int argc, char* argv[] )
 {
-  // Initialize ROSros_odom_pub
+  // Initialize ROS
   ros::init(argc, argv, "Gazebo_Bridge");
   ros::NodeHandle n;
   ros::NodeHandle n_("~");
