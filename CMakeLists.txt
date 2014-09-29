@@ -7,6 +7,8 @@ find_package(catkin REQUIRED COMPONENTS roscpp sensor_msgs nav_msgs tf)
 ## Gazebo Standalone ##
 #######################
 
+find_package(gazebo REQUIRED)
+
 include (FindPkgConfig)
 if (PKG_CONFIG_FOUND)
   pkg_check_modules(GAZEBO gazebo)
