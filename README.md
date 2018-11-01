@@ -2,7 +2,7 @@
 Programs that show how to drive a Pioneer3-AT robot with ros (I used it for Gazebo).
 
 ## This fork
-I donwloaded this example to learn how to use ROS (system for robot communication) and Gazebo (robot simulator) in tandem. This project contains more content than what I used, but at least for my case I noticed 2 shortcomings: there's no README in the original, and it doesn't work with the latest version of Gazebo, which in my case is version 9.
+I donwloaded this example to learn how to use ROS (system for robot communication) and Gazebo (robot simulator) in tandem. This project contains more content than what I used, but at least for my case I noticed 2 shortcomings: there's no README in the original, and it doesn't work with the latest version of Gazebo, which in my case is version 9. To the former I've contributed by starting this file, and for the latter I changed a couple of source files a smidge. 
 
 ## README
 Instead of a README.md the project has a [google doc](https://docs.google.com/document/d/1-HmQuTe955WDy5t9Q70rw00o4WJjFePuAhqxbgarA1Q/edit), which I'll try to paste below.
@@ -119,6 +119,5 @@ Instead of a README.md the project has a [google doc](https://docs.google.com/do
 
   With this most basic example you can send movement messages to the robot along the `/Pioneer3AT/cmd_vel` topic.
 
-## Updating basic usage with Gazebo for version 9
-### Link ROS packages
-### Switch to Ignition libraries
+
+-- @ogallagher
