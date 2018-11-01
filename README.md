@@ -118,6 +118,3 @@ Instead of a README.md the project has a [google doc](https://docs.google.com/do
   > `gzclient`
 
   With this most basic example you can send movement messages to the robot along the `/Pioneer3AT/cmd_vel` topic.
-
-
--- @ogallagher
