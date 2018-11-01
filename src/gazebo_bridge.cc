@@ -23,7 +23,8 @@
 
 #include <gazebo/transport/transport.hh>
 #include <gazebo/msgs/msgs.hh>
-#include <gazebo/math/gzmath.hh>
+//#include <gazebo/math/gzmath.hh> //This library was replaced with ignition::math
+#include <ignition/math.hh>
 
 #include <iostream>
 
@@ -42,16 +43,22 @@ double ros_odom_tf_future_date;
 void ros_cmd_vel_Callback(const geometry_msgs::Twist::ConstPtr& msg_in)
 { 
   // Generate a pose
-  gazebo::math::Pose pose(msg_in->linear.x,
-                          msg_in->linear.y,
-                          msg_in->linear.z,
-                          msg_in->angular.x,
-                          msg_in->angular.y,
-                          msg_in->angular.z);
+//   gazebo::math::Pose pose(msg_in->linear.x,
+//                           msg_in->linear.y,
+//                           msg_in->linear.z,
+//                           msg_in->angular.x,
+//                           msg_in->angular.y,
+//                           msg_in->angular.z);
+  ignition::math::Pose3<double> pose(msg_in->linear.x,
+                                     msg_in->linear.y,
+                                     msg_in->linear.z,
+                                     msg_in->angular.x,
+                                     msg_in->angular.y,
+                                     msg_in->angular.z);
   
   // Convert to a pose message
-  gazebo::msgs::Pose msg_out;
-  gazebo::msgs::Set(&msg_out, pose);
+  gazebo::msgs::Pose msg_out = gazebo::msgs::Convert(pose);
+//   gazebo::msgs::Set(&msg_out, pose);
   gz_vel_cmd_pub->Publish(msg_out);
 }
 
