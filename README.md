@@ -14,7 +14,7 @@ Instead of a README.md the project has a [google doc](https://docs.google.com/do
 
 ### System Installation
 #### ROS Installation
-> Install wiki page works well: http://www.ros.org/wiki/hydro/Installation/Ubuntu
+> Install wiki page works well: http://www.ros.org/wiki/melodic/Installation/Ubuntu
 > Select the -desktop-full package.
 
 #### Gazebo Standalone
@@ -32,6 +32,9 @@ Instead of a README.md the project has a [google doc](https://docs.google.com/do
 
 #### Workspace Setup:
 > Check the ROS website for installing and setting up the workspace
+
+#### Gazebo Dependencies
+> Apparently, Gazebo 9 a new set of dependencies from Ignition was introduced. Follow [these instructions](http://gazebosim.org/tutorials?tut=install_dependencies_from_source) to download them.
 
 #### Userspace Installation 
 ##### RosAria
