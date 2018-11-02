@@ -2,7 +2,7 @@
 Programs that show how to drive a Pioneer3-AT robot with ros.
 
 ## README
-This README is adapted from this [google doc](https://docs.google.com/document/d/1-HmQuTe955WDy5t9Q70rw00o4WJjFePuAhqxbgarA1Q/edit), which has some better formatting and diagrams if the instructions here are confusing.
+This README is adapted from this [google doc](https://docs.google.com/document/d/1C_GdAAQck-IT4H5GnsH3j6OezUbehUphtlnn8XU4XBk/edit), which has some better formatting and diagrams if the instructions here are confusing.
 
 ## Introduction
 > This is a quick-start guide to using a Pioneer3AT Mobile Robot with ROS. It should allow you to drive a robot via a GUI application or a PS3 controller. If you have a SICK or Hokuyo LMS device, you can also make a 2D map of an environment and be able to give the robot Autonomous navigation commands from a GUI application. 
@@ -13,7 +13,7 @@ This README is adapted from this [google doc](https://docs.google.com/document/d
 ### ROS Installation
 > Install wiki page works well: http://www.ros.org/wiki/melodic/Installation/Ubuntu
 > Select the -desktop-full package.
-
+https://docs.google.com/document/d/1-HmQuTe955WDy5t9Q70rw00o4WJjFePuAhqxbgarA1Q/edit
 ### Workspace Setup:
 > Check the ROS website for installing and setting up the workspace
 
@@ -37,7 +37,7 @@ This README is adapted from this [google doc](https://docs.google.com/document/d
   > `source ~/.bashrc`
 
 #### Gazebo
-  > __For directions that required Gazebo 1.6, see the [google doc](https://docs.google.com/document/d/1-HmQuTe955WDy5t9Q70rw00o4WJjFePuAhqxbgarA1Q/edit).__<br>
+_For directions that required Gazebo 1.6, see the [google doc](https://docs.google.com/document/d/1C_GdAAQck-IT4H5GnsH3j6OezUbehUphtlnn8XU4XBk/edit)._
   > Follow the instructions at [gazebosim.org](http://gazebosim.org/tutorials?tut=install_ubuntu&cat=install) for download and installation.<br>
   > `echo "export LD_LIBRARY_PATH=/usr/local/lib:$LD_LIBRARY_PATH" >> ~/.bashrc`<br>
   > `echo "source /usr/share/gazebo/setup.sh" >> ~/.bashrc` This line may depend on how you install it.<br>
@@ -59,7 +59,7 @@ This README is adapted from this [google doc](https://docs.google.com/document/d
   > `gedit ~/catkin_ws/src/ros-pioneer3at/launch/hardware.launch` (gedit can be replaced with any text editor)<br>
   > 1) Comment the physical robot and lidar drivers<br>
   > 2) Uncomment the gazebo robot and lidar drivers<br>
-  > Example:<br>
+  
   > `<!-- Select the robot-driver you wish to use -->`<br>
   > `<include file="$(find pioneer3at)/launch/core/gazebo.launch" />`<br>
   > `<!-- <include file="$(find pioneer3at)/launch/core/rosaria.launch" /> -->`<br>
@@ -71,7 +71,7 @@ This README is adapted from this [google doc](https://docs.google.com/document/d
   > `<!-- <include file="$(find pioneer3at)/launch/lidar/hokuyo.launch" /> -->`<br>
 
   > `gedit ~/catkin_ws/src/ros-pioneer3at/launch/ui.launch`<br>	
-  > 1) Select the control method you want to use<br>
+  > 1) Select the control method you want to use.<br>
   > `<!-- Select the control method you wish to use -->`<br>
   > `<include file="$(find pioneer3at)/launch/control/rqt_robot_steering.launch" />`<br>
   > `<!-- <include file="$(find pioneer3at)/launch/control/ps3joy.launch" /> -->`<br>
@@ -99,11 +99,26 @@ This README is adapted from this [google doc](https://docs.google.com/document/d
 
   > `<plugin name="SkidSteerDrivePlugin" filename="libSkidSteerDrivePlugin.so" />`<br>
 
-#### Launch Control Demo __(According to what I did)
-  > `cd catkin_ws/src/pioneer3at/launch/core`<br>
-  > `roslaunch gazebo.launch`<br>
+#### Launch Control Demo
+This demo is the most basic example; you can send movement messages to the robot along the `/Pioneer3AT/cmd_vel` topic.
+
+  > `cd catkin_ws/src/pioneer3at/launch/`<br>
+  > `roslaunch hardware.launch`<br>
   
   > Then, in another terminal:
   > `gzclient`
 
-  With this most basic example you can send movement messages to the robot along the `/Pioneer3AT/cmd_vel` topic.
+#### Control Demo Explanation
+File paths here are all prefixed by `~catkin_ws/src/pioneer3at`.
+
+`launch/hardware.launch` runs `launch/core/gazebo.launch`.
+
+`gazebo.launch` in turn opens a world (`config/gazebo/wg_world.sdf`) with all the models needed in a gazebo server, and runs a ROS node from `src/gazebo_bridge.cc` that connects Gazebo to ROS communication so the robot can be controlled.
+
+`hardware.launch` then enables the laser attached to the robot model with `launch/lidar/gazebo_hokuyo.launch`.
+
+`gazebo_hokuyo.launch` runs a laser-scanning ROS node from `src/gazebo_laserscan.cc` which publishes information from the laser sensor.
+
+Finally, `hardware.launch` runs `launch/core/urdf.launch` and `cmd_vel_mux.launch`. The first opens a ROS node that publishes location+orientation information about the robot, and the second _seems to remap a ROS topic so robot-control commands can be communicated along Pioneer3AT/cmd\_vel (This information should be reviewed)._
+  
+__If you want to run more complex examples, check out `demo_navigation_amcl.launch` and `demo_navigation_gmapping.launch`.__
