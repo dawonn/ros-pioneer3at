@@ -1,63 +1,49 @@
 # ros-pioneer3at
-Programs that show how to drive a Pioneer3-AT robot with ros (I used it for Gazebo).
-
-## This fork
-I donwloaded this example to learn how to use ROS (system for robot communication) and Gazebo (robot simulator) in tandem. This project contains more content than what I used, but at least for my case I noticed 2 shortcomings: there's no README in the original, and it doesn't work with the latest version of Gazebo, which in my case is version 9. To the former I've contributed by starting this file, and for the latter I changed a couple of source files a smidge. 
+Programs that show how to drive a Pioneer3-AT robot with ros.
 
 ## README
-Instead of a README.md the project has a [google doc](https://docs.google.com/document/d/1-HmQuTe955WDy5t9Q70rw00o4WJjFePuAhqxbgarA1Q/edit), which I'll try to paste below.
+This README is adapted from this [google doc](https://docs.google.com/document/d/1-HmQuTe955WDy5t9Q70rw00o4WJjFePuAhqxbgarA1Q/edit), which has some better formatting and diagrams if the instructions here are confusing.
 
-### Introduction
+## Introduction
 > This is a quick-start guide to using a Pioneer3AT Mobile Robot with ROS. It should allow you to drive a robot via a GUI application or a PS3 controller. If you have a SICK or Hokuyo LMS device, you can also make a 2D map of an environment and be able to give the robot Autonomous navigation commands from a GUI application. 
 
 > If you have any problems, get stuck, lost, confused, find errors, just want to say thanks, etc, highlight the area of the document and leave a comment. I’ll try to keep this up to date as best as I can whenever I receive feedback. :)
 
-### System Installation
-#### ROS Installation
+## System Installation
+### ROS Installation
 > Install wiki page works well: http://www.ros.org/wiki/melodic/Installation/Ubuntu
 > Select the -desktop-full package.
 
-#### Gazebo Standalone
-> __THIS FORK FIXES HAVING TO USE GAZEBO 1.6. SO FEEL FREE TO DOWNLOAD A CURRENT VERSION.__ 
-
-> _The Pioneer3AT ROS package requires some features in Gazebo-1.6 which is still under development, so we need to install from source at this time._
- `mkdir ~/gazebo`
- `cd ~/gazebo`
-  `hg clone https://bitbucket.org/osrf/gazebo gazebo`
-  `mkdir -p ~/gazebo/gazebo/build`
-  `cd ~/gazebo/gazebo/build`
-  `cmake ..`
-  `make -j 8         # Replace 8 with the number of cores in your system`
-  `sudo make install`
-
-#### Workspace Setup:
+### Workspace Setup:
 > Check the ROS website for installing and setting up the workspace
 
-#### Gazebo Dependencies
+### Gazebo Dependencies
 > Apparently, Gazebo 9 a new set of dependencies from Ignition was introduced. Follow [these instructions](http://gazebosim.org/tutorials?tut=install_dependencies_from_source) to download them.
 
-#### Userspace Installation 
-##### RosAria
+### Userspace Installation 
+#### RosAria
   > `cd ~/catkin_ws/src`<br>
   > `git clone https://github.com/amor-ros-pkg/rosaria.git`<br>
   > `cd ..`<br>
   > `rosdep install rosaria`<br>
   > `catkin_make`<br>
   > `source ~/.bashrc`<br>
-##### Pioneer 3AT
+#### Pioneer 3AT
   > `cd ~/catkin_ws/src`<br>
   > `git clone git://github.com/dawonn/ros-pioneer3at.git`<br>
   > `cd ..`<br>
   > `rosdep install pioneer3at`<br>
   > `catkin_make`<br>
-  > `source ~/.bashrc
+  > `source ~/.bashrc`
 
-##### Gazebo
+#### Gazebo
+  > __For directions that required Gazebo 1.6, see the [google doc](https://docs.google.com/document/d/1-HmQuTe955WDy5t9Q70rw00o4WJjFePuAhqxbgarA1Q/edit).__<br>
+  > Follow the instructions at [gazebosim.org](http://gazebosim.org/tutorials?tut=install_ubuntu&cat=install) for download and installation.<br>
   > `echo "export LD_LIBRARY_PATH=/usr/local/lib:$LD_LIBRARY_PATH" >> ~/.bashrc`<br>
-  > `echo "source /usr/share/gazebo/setup.sh" >> ~/.bashrc` _This line may depend on how you install it_<br>
-  > `source ~/.bashrc
+  > `echo "source /usr/share/gazebo/setup.sh" >> ~/.bashrc` This line may depend on how you install it.<br>
+  > `source ~/.bashrc`
 
-##### Gazebo Models
+#### Gazebo Models
   > `gazebo`
 
   > 1) Click the insert tab on the top left of the screen<br>
@@ -68,9 +54,9 @@ Instead of a README.md the project has a [google doc](https://docs.google.com/do
 
   > Note: This process downloads a copy of the models to ~/.gazebo/models/
 
-#### Using Gazebo Simulator
-##### Basic Configuration
-  > `gedit ~/catkin_ws/src/ros-pioneer3at/launch/hardware.launch`<br>
+### Using Gazebo Simulator
+#### Basic Configuration
+  > `gedit ~/catkin_ws/src/ros-pioneer3at/launch/hardware.launch` (gedit can be replaced with any text editor)<br>
   > 1) Comment the physical robot and lidar drivers<br>
   > 2) Uncomment the gazebo robot and lidar drivers<br>
   > Example:<br>
@@ -113,7 +99,7 @@ Instead of a README.md the project has a [google doc](https://docs.google.com/do
 
   > `<plugin name="SkidSteerDrivePlugin" filename="libSkidSteerDrivePlugin.so" />`<br>
 
-##### Launch Control Demo __(According to what I did)
+#### Launch Control Demo __(According to what I did)
   > `cd catkin_ws/src/pioneer3at/launch/core`<br>
   > `roslaunch gazebo.launch`<br>
   
