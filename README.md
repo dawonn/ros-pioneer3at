@@ -119,6 +119,6 @@ File paths here are all prefixed by `~catkin_ws/src/pioneer3at`.
 
 `gazebo_hokuyo.launch` runs a laser-scanning ROS node from `src/gazebo_laserscan.cc` which publishes information from the laser sensor.
 
-Finally, `hardware.launch` runs `launch/core/urdf.launch` and `cmd_vel_mux.launch`. The first opens a ROS node that publishes location+orientation information about the robot, and the second _seems to remap a ROS topic so robot-control commands can be communicated along Pioneer3AT/cmd\_vel (This information should be reviewed)._
+Finally, `hardware.launch` runs `launch/core/urdf.launch` and `cmd_vel_mux.launch`. The first opens a ROS node that publishes location+orientation information about the robot, and the second seems to remap a ROS topic so robot-control commands can be communicated along Pioneer3AT/cmd\_vel. _(This information should be reviewed)._
   
 __If you want to run more complex examples, check out `demo_navigation_amcl.launch` and `demo_navigation_gmapping.launch`.__
