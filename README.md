@@ -78,9 +78,9 @@ _For directions that required Gazebo 1.6, see the [google doc](https://docs.goog
   > `<!-- <include file="$(find pioneer3at)/launch/control/xboxjoy.launch" /> -->`<br>
 
   > `sudo gedit ~/.gazebo/models/pioneer3at/model.sdf`<br>
-  > 1) Uncomment the hokuyo and skidsteerdrive plugin near the bottom<br>
+  > 1) Uncomment the skidsteerdrive plugin near the bottom:<br>
   > 2) Remove the <MaxForce> tag<br>
-  > Example:<br>
+  > 3) Add the following:<br>
   > `<include>`<br>
   > `  <uri>model://hokuyo</uri>`<br>
   > `  <pose>0.2 0 0.13 0 0 0</pose>`<br>
@@ -96,8 +96,6 @@ _For directions that required Gazebo 1.6, see the [google doc](https://docs.goog
   > `    </limit>`<br>
   > `  </axis>`<br>
   > `</joint>`
-
-  > `<plugin name="SkidSteerDrivePlugin" filename="libSkidSteerDrivePlugin.so" />`<br>
 
 #### Launch Control Demo
 This demo is the most basic example; you can send movement messages to the robot along the `/Pioneer3AT/cmd_vel` topic.
